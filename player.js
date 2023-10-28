@@ -1,7 +1,8 @@
-import { FPS, con, key } from "./option.js";
+import { FPS, con, key, DEFAULT_PLAYER } from "./option.js";
 import { getRandom, sin, cos } from "./function.js";
 import { Point, Vector, Entity } from "./class.js";
 import { Bullet } from "./bullet.js";
+import { enemies } from "./enemy.js";
 
 /**
  * プレイヤーのクラス
@@ -118,6 +119,19 @@ export class Player extends Entity {
             }
             else i++;
         }
+
+        let j = 0;
+        while (j < this.bullets.length) {
+            const bullet = this.bullets[j];
+            for (const enemy of enemies) {
+                if (bullet.checkHit(enemy)) {
+                    enemy.hp -= 10;
+                    this.bullets.splice(j, 1);
+                    break;
+                }
+                else j++;
+            }
+        }
     }
 
 
@@ -137,6 +151,7 @@ export class Player extends Entity {
 
         con.fillStyle = "#fff";
         con.fillText(this.bullets.length, 10, 10);
+        if (this.bullets.length) con.fillText(this.bullets[0].checkHit(enemies[0]), 10, 20);
     }
 
     updata() {
@@ -147,3 +162,14 @@ export class Player extends Entity {
         this.draw();
     }
 }
+
+
+export const player = new Player(
+    new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
+    new Vector(new Point(0, 0), new Point(0, 0)),
+    DEFAULT_PLAYER.maxSpeed,
+    DEFAULT_PLAYER.accel,
+    DEFAULT_PLAYER.RPM,
+    DEFAULT_PLAYER.MOA,
+    DEFAULT_PLAYER.bulletSpeed,
+);

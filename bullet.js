@@ -1,5 +1,7 @@
 import { con } from "./option.js";
-import { Point, Vector, Entity } from "./class.js";
+import { Point, Vector, Entity, } from "./class.js";
+import { Enemy } from "./enemy.js";
+
 
 /**
  * 弾丸のクラス
@@ -12,6 +14,26 @@ export class Bullet extends Entity {
         super(position, vector);
         this.length = length;
     }
+
+    /**
+     * 敵との衝突判定
+     * @param {Enemy} enemy 敵
+     * @returns {boolean}
+     */
+    checkHit(enemy) {
+        const left = enemy.pos.x - enemy.w / 2;
+        const right = enemy.pos.x + enemy.w / 2;
+        const top = enemy.pos.y - enemy.h / 2;
+        const bottom = enemy.pos.y + enemy.h / 2;
+        if (left < this.pos.x && this.pos.x < right) {
+            if (top < this.pos.y && this.pos.y < bottom) {
+                console.log("Hit");
+                return true;
+            }
+        }
+        return false;
+    }
+
     draw() {
         const p = this.length / this.vector.getLength();
         con.strokeStyle = "#fff";

@@ -30,7 +30,43 @@ export class Vector {
     getLength() {
         return Math.sqrt(this.x ** 2 + this.y ** 2);
     }
+
+    /**
+     * 乗算
+     * @param {number} multiplier 掛ける数
+     */
+    multiplication(multiplier) {
+        this.x *= multiplier;
+        this.y *= multiplier;
+    }
 }
+
+
+// export class Square {
+//     constructor(centerPosition, width, height) {
+//         this.pos = centerPosition;
+//         this.w = width;
+//         this.h = height;
+//         this.left = this.pos.x - this.w / 2;
+//         this.right = this.pos.x + this.w / 2;
+//         this.top = this.pos.y - this.h / 2;
+//         this.bottom = this.pos.y + this.h / 2;
+//     }
+
+//     /**
+//      * 長方形同士の当たり判定
+//      * @param {Square} square2 
+//      * @returns {boolean} 当たってるか否か
+//      */
+//     collision(square2) {
+//         if (this.left < square2.right && square2.left < this.right) {
+//             if (this.top < square2.bottom && square2.top < this.bottom) {
+//                 return true;
+//             }
+//         }
+//         return false;
+//     }
+// }
 
 /**
  * エンティティのクラス
