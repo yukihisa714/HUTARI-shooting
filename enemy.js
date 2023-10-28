@@ -43,3 +43,14 @@ export const enemies = [
         100,
     ),
 ];
+
+export function operateEnemies() {
+    let i = 0;
+    while (i < enemies.length) {
+        enemies[i].update();
+        if (enemies[i].hp <= 0) {
+            enemies.splice(i, 1);
+        }
+        else i++;
+    }
+}

@@ -120,11 +120,10 @@ export class Player extends Entity {
             else i++;
         }
 
-        let j = 0;
-        while (j < this.bullets.length) {
-            const bullet = this.bullets[j];
-            for (const enemy of enemies) {
-                if (bullet.checkHit(enemy)) {
+        for (const enemy of enemies) {
+            let j = 0;
+            while (j < this.bullets.length) {
+                if (this.bullets[j].checkHit(enemy)) {
                     enemy.hp -= 10;
                     this.bullets.splice(j, 1);
                     break;
@@ -151,7 +150,6 @@ export class Player extends Entity {
 
         con.fillStyle = "#fff";
         con.fillText(this.bullets.length, 10, 10);
-        if (this.bullets.length) con.fillText(this.bullets[0].checkHit(enemies[0]), 10, 20);
     }
 
     updata() {
