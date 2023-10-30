@@ -1,4 +1,4 @@
-import { FPS } from "./option.js";
+import { CAN_W, CAN_H, FPS } from "./option.js";
 
 /**
  * 点のクラス
@@ -42,48 +42,40 @@ export class Vector {
 }
 
 
-// export class Square {
-//     constructor(centerPosition, width, height) {
-//         this.pos = centerPosition;
-//         this.w = width;
-//         this.h = height;
-//         this.left = this.pos.x - this.w / 2;
-//         this.right = this.pos.x + this.w / 2;
-//         this.top = this.pos.y - this.h / 2;
-//         this.bottom = this.pos.y + this.h / 2;
-//     }
-
-//     /**
-//      * 長方形同士の当たり判定
-//      * @param {Square} square2 
-//      * @returns {boolean} 当たってるか否か
-//      */
-//     collision(square2) {
-//         if (this.left < square2.right && square2.left < this.right) {
-//             if (this.top < square2.bottom && square2.top < this.bottom) {
-//                 return true;
-//             }
-//         }
-//         return false;
-//     }
-// }
 
 /**
  * エンティティのクラス
  * @param {Point} position 座標
+ * @param {number} width 横幅
+ * @param {number} height 縦幅
  * @param {Vector} vector 速度と向き(一秒あたりのピクセル)
  */
 export class Entity {
-    constructor(position, vector) {
+    constructor(position, width, height, vector) {
         this.pos = position;
+        this.w = width;
+        this.h = height;
         this.vector = vector;
     }
 
     /**
      * 動くメソッド
+     * @param {boolean} canOffScreen 画面外に出れるかどうか
      */
-    move() {
-        this.pos.x += this.vector.x / FPS;
-        this.pos.y += this.vector.y / FPS;
+    move(canOffScreen) {
+        const newX = this.pos.x + this.vector.x / FPS;
+        const newY = this.pos.y + this.vector.y / FPS;
+        if (canOffScreen) {
+            this.pos.x = newX;
+            this.pos.y = newY;
+        }
+        else {
+            if (0 < newX - this.w / 2 && newX + this.w / 2 < CAN_W) {
+                this.pos.x = newX;
+            }
+            if (0 < newY && newY + this.h < CAN_H) {
+                this.pos.y = newY;
+            }
+        }
     }
 }

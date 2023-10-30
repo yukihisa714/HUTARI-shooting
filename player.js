@@ -7,6 +7,8 @@ import { enemies } from "./enemy.js";
 /**
  * プレイヤーのクラス
  * @param {Point} position 座標
+ * @param {number} width 横幅
+ * @param {number} height 縦幅
  * @param {Vector} vector 速度と向き(一秒あたりのpx)
  * @param {number} speed プレイヤーのx,y方向の最高速度
  * @param {number} accel 加速度/s
@@ -15,8 +17,8 @@ import { enemies } from "./enemy.js";
  * @param {number} bulletSpeed 弾の速度
  */
 export class Player extends Entity {
-    constructor(position, vector, speed, accel, rpm, moa, bulletSpeed) {
-        super(position, vector);
+    constructor(position, width, height, vector, speed, accel, rpm, moa, bulletSpeed) {
+        super(position, width, height, vector);
         this.speed = speed;
         this.accel = accel;
         this.bullets = [];
@@ -94,6 +96,8 @@ export class Player extends Entity {
                 this.bullets.push(
                     new Bullet(
                         new Point(this.pos.x, this.pos.y),
+                        1,
+                        1,
                         bulletVector,
                         10,
                     )
@@ -153,7 +157,7 @@ export class Player extends Entity {
     }
 
     updata() {
-        this.move();
+        this.move(false);
         this.control();
         this.fire();
         this.operateBullets();
@@ -164,6 +168,8 @@ export class Player extends Entity {
 
 export const player = new Player(
     new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
+    20,
+    30,
     new Vector(new Point(0, 0), new Point(0, 0)),
     DEFAULT_PLAYER.maxSpeed,
     DEFAULT_PLAYER.accel,

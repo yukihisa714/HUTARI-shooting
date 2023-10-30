@@ -3,11 +3,9 @@ import { Point, Vector, Entity } from "./class.js";
 import { player } from "./player.js";
 
 export class Enemy extends Entity {
-    constructor(position, vector, speed, width, height, HP) {
-        super(position, vector);
+    constructor(position, width, height, vector, speed, HP) {
+        super(position, width, height, vector);
         this.speed = speed;
-        this.w = width;
-        this.h = height;
         this.hp = HP;
     }
 
@@ -36,10 +34,10 @@ export class Enemy extends Entity {
 export const enemies = [
     new Enemy(
         new Point(150, 100),
+        20,
+        20,
         new Vector(new Point(0, 0), new Point(0, 0),),
         50,
-        20,
-        20,
         100,
     ),
 ];
