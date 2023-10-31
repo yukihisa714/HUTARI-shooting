@@ -1,12 +1,27 @@
 import { FPS, con } from "./option.js";
-import { Point, Vector, Entity } from "./class.js";
+import { Point, Vector, Entity, Square } from "./class.js";
 import { player } from "./player.js";
 
+
+/**
+ * 敵のクラス
+ * @param {Point} position 座標
+ * @param {number} width 横幅
+ * @param {number} height 縦幅
+ * @param {Vector} vector 速度
+ * @param {number} speed 速さ
+ * @param {number} HP 体力
+ * @param {number} DPS damage/second
+ * @param {number} DPA damage/attack
+ */
 export class Enemy extends Entity {
-    constructor(position, width, height, vector, speed, HP) {
-        super(position, width, height, vector);
+    constructor(position, width, height, vector, rigidBody, speed, HP, DPS, DPA) {
+        super(position, width, height, vector, rigidBody);
         this.speed = speed;
         this.hp = HP;
+        this.dps = DPS;
+        this.dpa = DPA;
+        this.aps = this.dpa / this.dps;
     }
 
     chasePlayer() {
@@ -26,7 +41,7 @@ export class Enemy extends Entity {
 
     update() {
         this.chasePlayer();
-        this.move();
+        this.move(true);
         this.draw();
     }
 }
@@ -37,8 +52,11 @@ export const enemies = [
         20,
         20,
         new Vector(new Point(0, 0), new Point(0, 0),),
+        new Square(new Point(150, 100), 10, 10, 10, 10),
         50,
         100,
+        10,
+        10,
     ),
 ];
 

@@ -1,5 +1,5 @@
 import { con } from "./option.js";
-import { Point, Vector, Entity, } from "./class.js";
+import { Point, Vector, Entity, Square, } from "./class.js";
 import { Enemy } from "./enemy.js";
 
 
@@ -9,11 +9,12 @@ import { Enemy } from "./enemy.js";
  * @param {number} width 横幅
  * @param {number} height 縦幅
  * @param {Vector} vector 速度と向き(一秒あたりのpx)(残像の向きにも使用)
+ * @param {Square} rigidBody 剛体の四角形
  * @param {number} length 弾の残像の長さ
  */
 export class Bullet extends Entity {
-    constructor(position, width, height, vector, length) {
-        super(position, width, height, vector);
+    constructor(position, width, height, vector, rigidBody, length) {
+        super(position, width, height, vector, rigidBody);
         this.length = length;
     }
 
@@ -23,17 +24,7 @@ export class Bullet extends Entity {
      * @returns {boolean}
      */
     checkHit(entity) {
-        const left = entity.pos.x - entity.w / 2;
-        const right = entity.pos.x + entity.w / 2;
-        const top = entity.pos.y - entity.h / 2;
-        const bottom = entity.pos.y + entity.h / 2;
-        if (left < this.pos.x && this.pos.x < right) {
-            if (top < this.pos.y && this.pos.y < bottom) {
-                console.log("Hit");
-                return true;
-            }
-        }
-        return false;
+        return this.rigidBody.collision(entity.rigidBody);
     }
 
     draw() {

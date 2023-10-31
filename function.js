@@ -20,7 +20,7 @@ export function getRandom(minimum, maximum, precision) {
 
 /**
  * 度数法から弧度法に変換する関数
- * @param {number} degrees 
+ * @param {number} degrees 弧度法
  * @returns {number} ラジアン
  */
 function degreesToRadians(degrees) {

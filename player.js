@@ -1,6 +1,6 @@
 import { FPS, con, key, DEFAULT_PLAYER } from "./option.js";
 import { getRandom, sin, cos } from "./function.js";
-import { Point, Vector, Entity } from "./class.js";
+import { Point, Vector, Entity, Square } from "./class.js";
 import { Bullet } from "./bullet.js";
 import { enemies } from "./enemy.js";
 
@@ -17,8 +17,8 @@ import { enemies } from "./enemy.js";
  * @param {number} bulletSpeed 弾の速度
  */
 export class Player extends Entity {
-    constructor(position, width, height, vector, speed, accel, rpm, moa, bulletSpeed) {
-        super(position, width, height, vector);
+    constructor(position, width, height, vector, rigidBody, speed, accel, rpm, moa, bulletSpeed) {
+        super(position, width, height, vector, rigidBody);
         this.speed = speed;
         this.accel = accel;
         this.bullets = [];
@@ -99,6 +99,7 @@ export class Player extends Entity {
                         1,
                         1,
                         bulletVector,
+                        new Square(new Point(this.pos.x, this.pos.y), 0, 0, 0, 0),
                         10,
                     )
                 );
@@ -135,14 +136,15 @@ export class Player extends Entity {
                 else j++;
             }
         }
+
+        for (const bullet of this.bullets) {
+            bullet.move(true);
+            bullet.draw();
+        }
     }
 
 
     draw() {
-        for (const bullet of this.bullets) {
-            bullet.move();
-            bullet.draw();
-        }
 
         con.fillStyle = "#00f";
         con.beginPath();
@@ -171,6 +173,7 @@ export const player = new Player(
     20,
     30,
     new Vector(new Point(0, 0), new Point(0, 0)),
+    new Square(new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY), 0, 30, 10, 10),
     DEFAULT_PLAYER.maxSpeed,
     DEFAULT_PLAYER.accel,
     DEFAULT_PLAYER.RPM,

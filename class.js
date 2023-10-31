@@ -12,6 +12,51 @@ export class Point {
     }
 }
 
+
+/**
+ * 当たり判定の長方形のクラス
+ * @param {Point} position 座標
+ * @param {number} marginTop 上余白
+ * @param {number} marginBottom 下余白
+ * @param {number} marginLeft 左余白
+ * @param {number} marginRight 右余白
+ */
+export class Square {
+    constructor(position, marginTop, marginBottom, marginLeft, marginRight) {
+        this.pos = position;
+        this.mTop = marginTop;
+        this.mLeft = marginLeft;
+        this.mRight = marginRight;
+        this.mBottom = marginBottom;
+
+        this.update(this.pos);
+    }
+
+    /**
+     * 座標の更新
+     * @param {Point} newPosition 新しい座標
+     */
+    update(newPosition) {
+        this.pos = newPosition;
+        this.top = this.pos.y - this.mTop;
+        this.left = this.pos.x - this.mLeft;
+        this.right = this.pos.x + this.mRight;
+        this.bottom = this.pos.y + this.mBottom;
+    }
+
+    /**
+     * 四角同士の衝突判定
+     * @param {Square} square2 二つ目の四角
+     * @returns {boolean} 衝突してるかどうか
+     */
+    collision(square2) {
+        if (square2.bottom < this.top || this.bottom < square2.top) return false;
+        if (square2.right < this.left || this.right < square2.left) return false;
+        return true;
+    }
+}
+
+
 /**
  * ベクトルのクラス
  * @param {Point} point1 始点
@@ -42,20 +87,21 @@ export class Vector {
 }
 
 
-
 /**
  * エンティティのクラス
  * @param {Point} position 座標
  * @param {number} width 横幅
  * @param {number} height 縦幅
  * @param {Vector} vector 速度と向き(一秒あたりのピクセル)
+ * @param {Square} rigidBody 当たり判定の剛体
  */
 export class Entity {
-    constructor(position, width, height, vector) {
+    constructor(position, width, height, vector, rigidBody) {
         this.pos = position;
         this.w = width;
         this.h = height;
         this.vector = vector;
+        this.rigidBody = rigidBody;
     }
 
     /**
@@ -77,5 +123,7 @@ export class Entity {
                 this.pos.y = newY;
             }
         }
+
+        this.rigidBody.update(this.pos);
     }
 }
