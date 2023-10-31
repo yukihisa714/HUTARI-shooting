@@ -1,4 +1,4 @@
-import { CAN_W, CAN_H, FPS } from "./option.js";
+import { CAN_W, CAN_H, FPS, con } from "./option.js";
 
 /**
  * 点のクラス
@@ -125,5 +125,17 @@ export class Entity {
         }
 
         this.rigidBody.update(this.pos);
+    }
+
+    drawRigidBody() {
+        con.strokeStyle = "#fff";
+        con.lineWidth = 1;
+        con.beginPath();
+        con.lineTo(this.rigidBody.left, this.rigidBody.top);
+        con.lineTo(this.rigidBody.right, this.rigidBody.top);
+        con.lineTo(this.rigidBody.right, this.rigidBody.bottom);
+        con.lineTo(this.rigidBody.left, this.rigidBody.bottom);
+        con.closePath();
+        con.stroke();
     }
 }

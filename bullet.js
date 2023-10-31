@@ -1,6 +1,5 @@
 import { con } from "./option.js";
 import { Point, Vector, Entity, Square, } from "./class.js";
-import { Enemy } from "./enemy.js";
 
 
 /**

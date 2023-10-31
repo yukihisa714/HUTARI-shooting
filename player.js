@@ -15,9 +15,10 @@ import { enemies } from "./enemy.js";
  * @param {number} rpm 発射レート rate per minutes
  * @param {number} moa 命中精度 minutes of arc
  * @param {number} bulletSpeed 弾の速度
+ * @param {number} HP 体力
  */
 export class Player extends Entity {
-    constructor(position, width, height, vector, rigidBody, speed, accel, rpm, moa, bulletSpeed) {
+    constructor(position, width, height, vector, rigidBody, speed, accel, rpm, moa, bulletSpeed, HP) {
         super(position, width, height, vector, rigidBody);
         this.speed = speed;
         this.accel = accel;
@@ -28,6 +29,7 @@ export class Player extends Entity {
         this.rateCount = 0;
         this.canFire = true;
         this.bulletSpeed = bulletSpeed;
+        this.hp = HP;
     }
 
     control() {
@@ -156,6 +158,9 @@ export class Player extends Entity {
 
         con.fillStyle = "#fff";
         con.fillText(this.bullets.length, 10, 10);
+        con.fillText(this.hp, this.pos.x, this.pos.y + 20);
+
+        this.drawRigidBody();
     }
 
     updata() {
@@ -179,4 +184,5 @@ export const player = new Player(
     DEFAULT_PLAYER.RPM,
     DEFAULT_PLAYER.MOA,
     DEFAULT_PLAYER.bulletSpeed,
+    100,
 );

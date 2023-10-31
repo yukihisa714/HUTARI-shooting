@@ -21,7 +21,9 @@ export class Enemy extends Entity {
         this.hp = HP;
         this.dps = DPS;
         this.dpa = DPA;
-        this.aps = this.dpa / this.dps;
+        this.fpa = this.dpa / this.dps * FPS;
+        this.attackCount = 0;
+        this.canAttack = true;
     }
 
     chasePlayer() {
@@ -29,6 +31,22 @@ export class Enemy extends Entity {
         const targetDistance = targetVector.getLength();
         targetVector.multiplication(this.speed / targetDistance);
         this.vector = targetVector;
+    }
+
+    attack() {
+        if (this.canAttack) {
+            if (this.rigidBody.collision(player.rigidBody)) {
+                player.hp -= this.dpa;
+                this.canAttack = false;
+            }
+        }
+        else {
+            this.attackCount++;
+            if (this.attackCount % this.fpa === 0) {
+                this.attackCount = 0;
+                this.canAttack = true;
+            }
+        }
     }
 
     draw() {
@@ -42,6 +60,7 @@ export class Enemy extends Entity {
     update() {
         this.chasePlayer();
         this.move(true);
+        this.attack();
         this.draw();
     }
 }
