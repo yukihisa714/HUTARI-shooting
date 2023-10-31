@@ -36,7 +36,7 @@ export class Player extends Entity {
         const accelPF = this.accel / FPS;
 
         // 左
-        if (key["a"]) {
+        if (key["ArrowLeft"]) {
             if (this.vector.x > -this.speed) {
                 this.vector.x -= accelPF;
             }
@@ -48,7 +48,7 @@ export class Player extends Entity {
         }
 
         // 右
-        if (key["d"]) {
+        if (key["ArrowRight"]) {
             if (this.vector.x < this.speed) {
                 this.vector.x += accelPF;
             }
@@ -60,7 +60,7 @@ export class Player extends Entity {
         }
 
         // 前
-        if (key["w"]) {
+        if (key["ArrowUp"]) {
             if (this.vector.y > -this.speed) {
                 this.vector.y -= accelPF;
             }
@@ -72,7 +72,7 @@ export class Player extends Entity {
         }
 
         // 後
-        if (key["s"]) {
+        if (key["ArrowDown"]) {
             if (this.vector.y < this.speed) {
                 this.vector.y += accelPF;
             }
