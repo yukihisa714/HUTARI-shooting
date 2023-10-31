@@ -1,0 +1,22 @@
+敵
+
+20*20
+speed 50
+HP 100
+dpa 10
+spa 1
+dps 10
+
+10*10
+speed 100
+HP 15
+dpa 5
+spa 0.5
+dps 10
+
+40*40
+speed 10
+HP 400
+dpa 25
+spa 2
+dps 12.5

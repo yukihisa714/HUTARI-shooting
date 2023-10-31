@@ -1,7 +1,7 @@
 /**
  * 精度を指定して乱数を取得する関数
  * @param {number} minimum 以上
- * @param {number} maximum 未満
+ * @param {number} maximum 以下
  * @param {number} precision 精度
  * @returns {number} 乱数
  */

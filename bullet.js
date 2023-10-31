@@ -4,6 +4,7 @@ import { Point, Vector, Entity, Square, } from "./class.js";
 
 /**
  * 弾丸のクラス
+ * @param {number} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
  * @param {number} height 縦幅
@@ -12,8 +13,8 @@ import { Point, Vector, Entity, Square, } from "./class.js";
  * @param {number} length 弾の残像の長さ
  */
 export class Bullet extends Entity {
-    constructor(position, width, height, vector, rigidBody, length) {
-        super(position, width, height, vector, rigidBody);
+    constructor(name, position, width, height, vector, rigidBody, length) {
+        super(name, position, width, height, vector, rigidBody);
         this.length = length;
     }
 

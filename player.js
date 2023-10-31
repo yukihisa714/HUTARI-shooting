@@ -6,6 +6,7 @@ import { enemies } from "./enemy.js";
 
 /**
  * プレイヤーのクラス
+ * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
  * @param {number} height 縦幅
@@ -18,8 +19,8 @@ import { enemies } from "./enemy.js";
  * @param {number} HP 体力
  */
 export class Player extends Entity {
-    constructor(position, width, height, vector, rigidBody, speed, accel, rpm, moa, bulletSpeed, HP) {
-        super(position, width, height, vector, rigidBody);
+    constructor(name, position, width, height, vector, rigidBody, speed, accel, rpm, moa, bulletSpeed, HP) {
+        super(name, position, width, height, vector, rigidBody);
         this.speed = speed;
         this.accel = accel;
         this.bullets = [];
@@ -30,6 +31,7 @@ export class Player extends Entity {
         this.canFire = true;
         this.bulletSpeed = bulletSpeed;
         this.hp = HP;
+        this.enemyKills = [];
     }
 
     control() {
@@ -97,6 +99,7 @@ export class Player extends Entity {
                 );
                 this.bullets.push(
                     new Bullet(
+                        "bullet",
                         new Point(this.pos.x, this.pos.y),
                         1,
                         1,
@@ -174,6 +177,7 @@ export class Player extends Entity {
 
 
 export const player = new Player(
+    "player",
     new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
     20,
     30,

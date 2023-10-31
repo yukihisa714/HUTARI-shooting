@@ -5,23 +5,25 @@ import { player } from "./player.js";
 
 /**
  * 敵のクラス
+ * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
  * @param {number} height 縦幅
  * @param {Vector} vector 速度
  * @param {number} speed 速さ
  * @param {number} HP 体力
- * @param {number} DPS damage/second
  * @param {number} DPA damage/attack
+ * @param {number} SPA second/attack
  */
 export class Enemy extends Entity {
-    constructor(position, width, height, vector, rigidBody, speed, HP, DPS, DPA) {
-        super(position, width, height, vector, rigidBody);
+    constructor(name, position, width, height, vector, rigidBody, speed, HP, DPA, SPA) {
+        super(name, position, width, height, vector, rigidBody);
         this.speed = speed;
         this.hp = HP;
-        this.dps = DPS;
         this.dpa = DPA;
-        this.fpa = this.dpa / this.dps * FPS;
+        this.spa = SPA;
+        this.fpa = this.spa * FPS;
+        this.dps = this.dpa * this.spa;
         this.attackCount = 0;
         this.canAttack = true;
     }
@@ -67,6 +69,7 @@ export class Enemy extends Entity {
 
 export const enemies = [
     new Enemy(
+        "enemy",
         new Point(150, 100),
         20,
         20,
@@ -75,7 +78,7 @@ export const enemies = [
         50,
         100,
         10,
-        10,
+        1,
     ),
 ];
 
@@ -84,6 +87,7 @@ export function operateEnemies() {
     while (i < enemies.length) {
         enemies[i].update();
         if (enemies[i].hp <= 0) {
+            player.enemyKills.push(enemies[i].name);
             enemies.splice(i, 1);
         }
         else i++;

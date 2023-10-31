@@ -89,6 +89,7 @@ export class Vector {
 
 /**
  * エンティティのクラス
+ * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
  * @param {number} height 縦幅
@@ -96,7 +97,8 @@ export class Vector {
  * @param {Square} rigidBody 当たり判定の剛体
  */
 export class Entity {
-    constructor(position, width, height, vector, rigidBody) {
+    constructor(name, position, width, height, vector, rigidBody) {
+        this.name = name;
         this.pos = position;
         this.w = width;
         this.h = height;
