@@ -1,6 +1,6 @@
 import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
 import { Point, Vector, Entity, Square } from "./class.js";
-import { getZeroPoint, getZeroVector } from "./function.js";
+import { getZeroVector } from "./function.js";
 import { MachineGun } from "./machineGun.js";
 
 export const DEFAULT_PLAYER = {

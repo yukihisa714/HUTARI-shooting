@@ -89,7 +89,7 @@ export class MachineGun extends Entity {
             let j = 0;
             while (j < this.firedBullets.length) {
                 if (this.firedBullets[j].checkHit(enemy)) {
-                    enemy.hp -= 10;
+                    enemy.takeDamage(10);
                     this.firedBullets.splice(j, 1);
                     break;
                 }
