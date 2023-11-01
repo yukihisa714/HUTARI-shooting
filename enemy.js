@@ -1,6 +1,115 @@
 import { FPS, con } from "./option.js";
 import { Point, Vector, Entity, Square } from "./class.js";
 import { player } from "./player.js";
+import { getZeroVector } from "./function.js";
+
+export const ENEMIES_DATA = [
+    {
+        name: "Trooper",
+        type: "Standard",
+        w: 20,
+        h: 20,
+        speed: 50,
+        hp: 50,
+        dpa: 10,
+        spa: 1,
+        dps: 10,
+
+        getClass: function (position) {
+            return new Enemy(
+                this.name,
+                position,
+                this.w,
+                this.h,
+                getZeroVector(),
+                new Square(position, this.h / 2, this.h / 2, this.w / 2, this.w / 2),
+                this.speed,
+                this.hp,
+                this.dpa,
+                this.spa,
+            )
+        }
+    },
+
+    {
+        name: "Speedster",
+        type: "Small and Agile",
+        w: 10,
+        h: 10,
+        speed: 100,
+        hp: 15,
+        dpa: 5,
+        spa: 0.5,
+        dps: 10,
+
+        getClass: function (position) {
+            return new Enemy(
+                this.name,
+                position,
+                this.w,
+                this.h,
+                getZeroVector(),
+                new Square(position, this.h / 2, this.h / 2, this.w / 2, this.w / 2),
+                this.speed,
+                this.hp,
+                this.dpa,
+                this.spa,
+            )
+        }
+    },
+
+    {
+        name: "Behemoth",
+        type: "Large and Strong",
+        w: 40,
+        h: 40,
+        speed: 15,
+        hp: 200,
+        dpa: 25,
+        spa: 2,
+        dps: 12.5,
+
+        getClass: function (position) {
+            return new Enemy(
+                this.name,
+                position,
+                this.w,
+                this.h,
+                getZeroVector(),
+                new Square(position, this.h / 2, this.h / 2, this.w / 2, this.w / 2),
+                this.speed,
+                this.hp,
+                this.dpa,
+                this.spa,
+            )
+        }
+    },
+
+    {
+        name: "Guardian",
+        type: "Shielded",
+        w: 20,
+        h: 20,
+        speed: 50,
+        hp: 50,
+        dpa: 10,
+        spa: 1,
+        dps: 10,
+        shield: 50
+    },
+
+    {
+        name: "Sniper",
+        type: "Ranged Attacker",
+        w: 20,
+        h: 20,
+        speed: 50,
+        hp: 10,
+        dpa: 2,
+        spa: 1,
+        dps: 2,
+    },
+];
 
 
 /**
@@ -53,7 +162,7 @@ export class Enemy extends Entity {
 
     draw() {
         con.fillStyle = "#f00";
-        con.fillRect(this.pos.x - 10, this.pos.y - 10, 20, 20);
+        con.fillRect(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.w, this.h);
 
         con.fillStyle = "#fff";
         con.fillText(this.hp, this.pos.x, this.pos.y);
@@ -68,19 +177,11 @@ export class Enemy extends Entity {
 }
 
 export const enemies = [
-    new Enemy(
-        "enemy",
-        new Point(150, 100),
-        20,
-        20,
-        new Vector(new Point(0, 0), new Point(0, 0),),
-        new Square(new Point(150, 100), 10, 10, 10, 10),
-        50,
-        50,
-        10,
-        1,
-    ),
+    ENEMIES_DATA[0].getClass(new Point(0, 0)),
+    ENEMIES_DATA[1].getClass(new Point(150, 0)),
+    ENEMIES_DATA[2].getClass(new Point(300, 0)),
 ];
+console.log(enemies);
 
 export function operateEnemies() {
     let i = 0;

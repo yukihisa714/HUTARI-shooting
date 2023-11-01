@@ -1,3 +1,5 @@
+import { Point, Vector } from "./class.js";
+
 /**
  * 精度を指定して乱数を取得する関数
  * @param {number} minimum 以上
@@ -52,4 +54,20 @@ export function cos(theta) {
  */
 export function tan(theta) {
     return Math.tan(degreesToRadians(theta));
+}
+
+/**
+ * 0 Pointを取得する関数
+ * @returns {Point} 0 Point
+ */
+export function getZeroPoint() {
+    return new Point(0, 0);
+}
+
+/**
+ * 0 Vectorを取得する関数
+ * @returns {Vector} 0 Vector
+ */
+export function getZeroVector() {
+    return new Vector(getZeroPoint(), getZeroPoint());
 }

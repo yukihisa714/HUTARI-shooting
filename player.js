@@ -1,8 +1,17 @@
-import { FPS, con, key, DEFAULT_PLAYER } from "./option.js";
-import { getRandom, sin, cos } from "./function.js";
+import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
 import { Point, Vector, Entity, Square } from "./class.js";
-import { Bullet } from "./bullet.js";
-import { enemies } from "./enemy.js";
+import { getZeroPoint, getZeroVector } from "./function.js";
+
+export const DEFAULT_PLAYER = {
+    posX: CAN_W / 2,
+    posY: CAN_H * 0.8,
+    maxSpeed: 120,
+    accel: 240,
+    RPM: 240,
+    MOA: 5,
+    bulletSpeed: 300,
+};
+
 
 /**
  * プレイヤーのクラス
@@ -107,7 +116,7 @@ export const player = new Player(
     new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
     20,
     30,
-    new Vector(new Point(0, 0), new Point(0, 0)),
+    getZeroVector(),
     new Square(new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY), 0, 30, 10, 10),
     DEFAULT_PLAYER.maxSpeed,
     DEFAULT_PLAYER.accel,
