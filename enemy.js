@@ -22,7 +22,7 @@ export class Enemy extends Entity {
         this.hp = HP;
         this.dpa = DPA;
         this.spa = SPA;
-        this.fpa = this.spa * FPS;
+        this.fpa = this.spa * FPS | 0;
         this.dps = this.dpa * this.spa;
         this.attackCount = 0;
         this.canAttack = true;
@@ -76,7 +76,7 @@ export const enemies = [
         new Vector(new Point(0, 0), new Point(0, 0),),
         new Square(new Point(150, 100), 10, 10, 10, 10),
         50,
-        100,
+        50,
         10,
         1,
     ),

@@ -2,7 +2,7 @@
 
 20*20
 speed 50
-HP 100
+HP 50
 dpa 10
 spa 1
 dps 10
@@ -15,8 +15,17 @@ spa 0.5
 dps 10
 
 40*40
-speed 10
-HP 400
+speed 15
+HP 200
 dpa 25
 spa 2
 dps 12.5
+
+20*20
+speed 30
+HP 50
+shield 50
+dpa 10
+spa 1
+dps 10
+
