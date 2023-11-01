@@ -1,5 +1,8 @@
+import { FPS, key } from "./option.js";
 import { getRandom, sin, cos } from "./function.js";
-import { Entity } from "./class.js";
+import { Point, Square, Vector, Entity } from "./class.js";
+import { Bullet } from "./bullet.js";
+import { enemies } from "./enemy.js";
 
 
 /**
@@ -13,9 +16,10 @@ import { Entity } from "./class.js";
  * @param {number} MOA 命中精度 minutes of arc
  * @param {number} bulletSpeed 弾の速度
  * @param {number} capacity 装填数
+ * @param {Entity} parent 親のエンティティ
  */
 export class MachineGun extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, RPM, MOA, bulletSpeed, capacity) {
+    constructor(name, position, width, height, vector, rigidBody, RPM, MOA, bulletSpeed, capacity, parent) {
         super(name, position, width, height, vector, rigidBody);
         this.rpm = RPM;
         this.fpr = FPS / (this.rpm / 60);
@@ -26,6 +30,15 @@ export class MachineGun extends Entity {
         this.firedBullets = [];
         this.capacity = capacity;
         this.remaining = this.capacity;
+        this.parent = parent;
+    }
+
+    /**
+     * エンティティに追従するメソッド
+     * @param {Entity} entity 追従する対象のエンティティ
+     */
+    follow() {
+        this.pos = new Point(this.parent.pos.x, this.parent.pos.y);
     }
 
     fire() {
@@ -91,6 +104,7 @@ export class MachineGun extends Entity {
     }
 
     update() {
+        this.follow();
         this.fire();
         this.operateBullets();
     }

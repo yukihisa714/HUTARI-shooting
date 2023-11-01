@@ -1,12 +1,13 @@
 import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
 import { Point, Vector, Entity, Square } from "./class.js";
 import { getZeroPoint, getZeroVector } from "./function.js";
+import { MachineGun } from "./machineGun.js";
 
 export const DEFAULT_PLAYER = {
     posX: CAN_W / 2,
     posY: CAN_H * 0.8,
     maxSpeed: 120,
-    accel: 240,
+    accel: 480,
     RPM: 240,
     MOA: 5,
     bulletSpeed: 300,
@@ -20,16 +21,19 @@ export const DEFAULT_PLAYER = {
  * @param {number} width 横幅
  * @param {number} height 縦幅
  * @param {Vector} vector 速度と向き(一秒あたりのpx)
- * @param {number} speed プレイヤーのx,y方向の最高速度
+ * @param {number} maxSpeed プレイヤーのx,y方向の最高速度
  * @param {number} accel 加速度/s
  * @param {number} HP 体力
+ * @param {MachineGun} machineGun 機銃
  */
 export class Player extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, speed, accel, HP) {
+    constructor(name, position, width, height, vector, rigidBody, maxSpeed, accel, HP, machineGun) {
         super(name, position, width, height, vector, rigidBody);
-        this.speed = speed;
+        this.speed = maxSpeed;
         this.accel = accel;
         this.hp = HP;
+        this.machineGun = machineGun;
+        this.machineGun.parent = this;
         this.enemyKills = [];
     }
 
@@ -106,6 +110,7 @@ export class Player extends Entity {
     updata() {
         this.move(false);
         this.control();
+        this.machineGun.update();
         this.draw();
     }
 }
@@ -121,4 +126,16 @@ export const player = new Player(
     DEFAULT_PLAYER.maxSpeed,
     DEFAULT_PLAYER.accel,
     100,
+    new MachineGun(
+        "machineGun",
+        new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
+        0,
+        0,
+        getZeroVector(),
+        new Square(new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY), 0, 0, 0, 0),
+        240,
+        5,
+        300,
+        1200,
+    ),
 );
