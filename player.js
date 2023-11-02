@@ -34,7 +34,7 @@ export class Player extends Entity {
         this.hp = HP;
         this.machineGun = machineGun;
         this.machineGun.parent = this;
-        this.enemyKills = [];
+        this.enemyKills = {};
     }
 
     control() {

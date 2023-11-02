@@ -265,7 +265,13 @@ export function operateEnemies() {
     while (i < enemies.length) {
         enemies[i].update();
         if (enemies[i].hp <= 0) {
-            player.enemyKills.push(enemies[i].name);
+            const name = enemies[i].name;
+            if (player.enemyKills[name]) {
+                player.enemyKills[name]++;
+            }
+            else {
+                player.enemyKills[name] = 1;
+            }
             enemies.splice(i, 1);
         }
         else i++;
