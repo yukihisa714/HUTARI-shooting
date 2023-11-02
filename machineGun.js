@@ -1,5 +1,5 @@
 import { FPS, key } from "./option.js";
-import { getRandom, sin, cos } from "./function.js";
+import { getRandom, sin, cos, getZeroPoint } from "./function.js";
 import { Point, Square, Vector, Entity } from "./class.js";
 import { Bullet } from "./bullet.js";
 import { enemies } from "./enemy.js";
@@ -35,27 +35,31 @@ export class MachineGun extends Entity {
     }
 
     fire() {
+        const MOA = getRandom(-this.moa / 2, this.moa / 2, 1);
+        const bulletVector = new Vector(
+            new Point(
+                cos(MOA + 90) * this.bulletSpeed,
+                sin(MOA + 90) * this.bulletSpeed,
+            ),
+            getZeroPoint(),
+        );
+        this.firedBullets.push(
+            new Bullet(
+                "bullet",
+                new Point(this.pos.x, this.pos.y),
+                1,
+                1,
+                bulletVector,
+                undefined,
+                10,
+            )
+        );
+    }
+
+    operateFire() {
         if (this.canFire) {
             if (key[" "]) {
-                const MOA = getRandom(-this.moa / 2, this.moa / 2, 1);
-                const bulletVector = new Vector(
-                    new Point(
-                        cos(MOA + 90) * this.bulletSpeed,
-                        sin(MOA + 90) * this.bulletSpeed,
-                    ),
-                    new Point(0, 0),
-                );
-                this.firedBullets.push(
-                    new Bullet(
-                        "bullet",
-                        new Point(this.pos.x, this.pos.y),
-                        1,
-                        1,
-                        bulletVector,
-                        undefined,
-                        10,
-                    )
-                );
+                this.fire();
                 this.canFire = false;
             }
         }
@@ -98,7 +102,7 @@ export class MachineGun extends Entity {
 
     update() {
         this.follow(player);
-        this.fire();
+        this.operateFire();
         this.operateBullets();
     }
 }
