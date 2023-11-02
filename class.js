@@ -104,6 +104,9 @@ export class Entity {
         this.h = height;
         this.vector = vector;
         this.rigidBody = rigidBody;
+        if (rigidBody === undefined) {
+            this.rigidBody = new Square(this.pos, 0, 0, 0, 0);
+        }
     }
 
     /**
@@ -127,6 +130,15 @@ export class Entity {
         }
 
         this.rigidBody.update(this.pos);
+    }
+
+    /**
+     * 他のエンティティ追従するメソッド
+     * @param {Entity} entity 追従先のエンティティ
+     */
+    follow(entity) {
+        this.pos.x = entity.pos.x;
+        this.pos.y = entity.pos.y;
     }
 
     drawRigidBody() {

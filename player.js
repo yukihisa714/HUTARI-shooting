@@ -103,6 +103,7 @@ export class Player extends Entity {
         con.fillStyle = "#fff";
         // con.fillText(this.bullets.length, 10, 10);
         con.fillText(this.hp, this.pos.x, this.pos.y + 20);
+        con.fillText(this.enemyKills, 10, 50);
 
         this.drawRigidBody();
     }

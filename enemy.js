@@ -172,6 +172,9 @@ export class Enemy extends Entity {
         this.canAttack = true;
         this.shieldHp = shieldHP;
         this.shieldHpMax = shieldHP;
+        this.shieldRadiusMax = Math.max(this.w, this.h) * Math.sqrt(2) * 0.75;
+        this.shieldRadiusMin = Math.max(this.w, this.h) / 2;
+        this.updateShield();
     }
 
     chasePlayer() {
@@ -198,7 +201,7 @@ export class Enemy extends Entity {
     }
 
     takeDamage(damage) {
-        if (this.shieldHp) {
+        if (this.shieldHp > 0) {
             this.shieldHp -= damage;
         }
         else {
@@ -206,15 +209,27 @@ export class Enemy extends Entity {
         }
     }
 
+    controlCollision() {
+        if (this.shieldHp > 0) {
+            this.rigidBody.mTop = this.shieldRadius;
+            this.rigidBody.mBottom = this.shieldRadius;
+            this.rigidBody.mLeft = this.shieldRadius;
+            this.rigidBody.mRight = this.shieldRadius;
+        }
+    }
+
+    updateShield() {
+        this.shieldRadius = this.shieldRadiusMin + (this.shieldRadiusMax - this.shieldRadiusMin) * this.shieldHp / this.shieldHpMax;
+    }
+
     draw() {
         con.fillStyle = this.color;
         con.fillRect(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.w, this.h);
 
         if (this.shieldHp > 0) {
-            const radius = Math.max(this.w, this.h) * Math.sqrt(2) * 0.75 * this.shieldHp / this.shieldHpMax;
 
             con.beginPath();
-            con.arc(this.pos.x, this.pos.y, radius, 0, Math.PI * 2, false);
+            con.arc(this.pos.x, this.pos.y, this.shieldRadius, 0, Math.PI * 2, false);
             con.closePath();
             con.fillStyle = "rgba(255,255,255,0.2)";
             con.fill();
@@ -231,6 +246,8 @@ export class Enemy extends Entity {
         this.chasePlayer();
         this.move(true);
         this.attack();
+        this.controlCollision();
+        this.updateShield();
         this.draw();
     }
 }

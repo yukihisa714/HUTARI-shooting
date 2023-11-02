@@ -3,6 +3,7 @@ import { getRandom, sin, cos } from "./function.js";
 import { Point, Square, Vector, Entity } from "./class.js";
 import { Bullet } from "./bullet.js";
 import { enemies } from "./enemy.js";
+import { player } from "./player.js";
 
 
 /**
@@ -33,14 +34,6 @@ export class MachineGun extends Entity {
         this.parent = parent;
     }
 
-    /**
-     * エンティティに追従するメソッド
-     * @param {Entity} entity 追従する対象のエンティティ
-     */
-    follow() {
-        this.pos = new Point(this.parent.pos.x, this.parent.pos.y);
-    }
-
     fire() {
         if (this.canFire) {
             if (key[" "]) {
@@ -59,7 +52,7 @@ export class MachineGun extends Entity {
                         1,
                         1,
                         bulletVector,
-                        new Square(new Point(this.pos.x, this.pos.y), 0, 0, 0, 0),
+                        undefined,
                         10,
                     )
                 );
@@ -104,7 +97,7 @@ export class MachineGun extends Entity {
     }
 
     update() {
-        this.follow();
+        this.follow(player);
         this.fire();
         this.operateBullets();
     }
