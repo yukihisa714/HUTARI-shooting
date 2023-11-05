@@ -1,3 +1,4 @@
+import { getZeroPoint, radiansToDegrees } from "./function.js";
 import { CAN_W, CAN_H, FPS, con } from "./option.js";
 
 /**
@@ -81,8 +82,21 @@ export class Vector {
      * @param {number} multiplier 掛ける数
      */
     multiplication(multiplier) {
-        this.x *= multiplier;
-        this.y *= multiplier;
+        return new Vector(
+            getZeroPoint(),
+            new Point(
+                this.x *= multiplier,
+                this.y *= multiplier,
+            )
+        )
+    }
+
+    changeLength(length) {
+        return this.multiplication(length / this.getLength());
+    }
+
+    getTheta() {
+        return radiansToDegrees(Math.atan2(this.y, this.x));
     }
 }
 

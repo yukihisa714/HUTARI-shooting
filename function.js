@@ -22,11 +22,19 @@ export function getRandom(minimum, maximum, precision) {
 
 /**
  * 度数法から弧度法に変換する関数
- * @param {number} degrees 弧度法
+ * @param {number} degrees 度数法
  * @returns {number} ラジアン
  */
-function degreesToRadians(degrees) {
+export function degreesToRadians(degrees) {
     return degrees * Math.PI / 180;
+}
+/**
+ * 弧度法から度数法に変換する関数
+ * @param {number} radians ラジアン
+ * @returns {number} 度数法
+ */
+export function radiansToDegrees(radians) {
+    return radians * 180 / Math.PI;
 }
 
 /**

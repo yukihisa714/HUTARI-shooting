@@ -2,6 +2,7 @@ import { FPS, con } from "./option.js";
 import { Point, Vector, Entity, Square } from "./class.js";
 import { player } from "./player.js";
 import { getZeroVector } from "./function.js";
+import { MachineGun } from "./machineGun.js";
 
 export const ENEMIES_DATA = [
     {
@@ -140,6 +141,36 @@ export const ENEMIES_DATA = [
         spa: 1,
         dps: 2,
         shield: 0,
+
+        getClass: function (position) {
+            return new RangeAttackEnemy(
+                this.name,
+                position,
+                this.w,
+                this.h,
+                getZeroVector(),
+                new Square(position, this.h / 2, this.h / 2, this.w / 2, this.w / 2),
+                this.color,
+                this.speed,
+                this.hp,
+                this.dpa,
+                this.spa,
+                this.shield,
+                new MachineGun(
+                    "machineGun",
+                    position,
+                    0,
+                    0,
+                    getZeroVector(),
+                    new Square(position, 0, 0, 0, 0),
+                    60,
+                    10,
+                    150,
+                    1200,
+                    0,
+                ),
+            )
+        }
     },
 ];
 
@@ -177,11 +208,12 @@ export class Enemy extends Entity {
         this.updateShield();
     }
 
+    getVectorToPlayer() {
+        return new Vector(this.pos, player.pos);
+    }
+
     chasePlayer() {
-        const targetVector = new Vector(this.pos, player.pos);
-        const targetDistance = targetVector.getLength();
-        targetVector.multiplication(this.speed / targetDistance);
-        this.vector = targetVector;
+        this.vector = this.getVectorToPlayer().changeLength(this.speed);
     }
 
     attack() {
@@ -252,15 +284,57 @@ export class Enemy extends Entity {
     }
 }
 
+
+class RangeAttackEnemy extends Enemy {
+    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHP, machineGun) {
+        super(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHP);
+        this.machineGun = machineGun;
+        this.machineGun.parent = this;
+    }
+
+    rangeAttack() {
+        const vectorToPlayer = this.getVectorToPlayer();
+        const aimDirection = vectorToPlayer.getTheta();
+        this.machineGun.aimDirection = aimDirection;
+    }
+
+    update() {
+        this.chasePlayer();
+        this.move(true);
+        this.attack();
+        this.controlCollision();
+        this.updateShield();
+        this.rangeAttack();
+        this.machineGun.update(true);
+        this.draw();
+    }
+
+}
+
+
 export const enemies = [
     ENEMIES_DATA[0].getClass(new Point(0, 0)),
     ENEMIES_DATA[1].getClass(new Point(150, 0)),
     ENEMIES_DATA[2].getClass(new Point(300, 0)),
     ENEMIES_DATA[3].getClass(new Point(125, 0)),
+    ENEMIES_DATA[4].getClass(new Point(225, 0)),
 ];
 console.log(enemies);
 
 export function operateEnemies() {
+    for (const enemy of enemies) {
+        let j = 0;
+        const bullets = player.machineGun.firedBullets;
+        while (j < bullets.length) {
+            if (bullets[j].checkHit(enemy)) {
+                enemy.takeDamage(10);
+                bullets.splice(j, 1);
+                break;
+            }
+            else j++;
+        }
+    }
+
     let i = 0;
     while (i < enemies.length) {
         enemies[i].update();

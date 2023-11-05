@@ -1,13 +1,11 @@
-import { FPS, key } from "./option.js";
+import { FPS } from "./option.js";
 import { getRandom, sin, cos, getZeroPoint } from "./function.js";
-import { Point, Square, Vector, Entity } from "./class.js";
+import { Point, Vector, Entity } from "./class.js";
 import { Bullet } from "./bullet.js";
-import { enemies } from "./enemy.js";
-import { player } from "./player.js";
 
 
 /**
- * プレイヤーのクラス
+ * 機銃のクラス
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -20,7 +18,7 @@ import { player } from "./player.js";
  * @param {Entity} parent 親のエンティティ
  */
 export class MachineGun extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, RPM, MOA, bulletSpeed, capacity, parent) {
+    constructor(name, position, width, height, vector, rigidBody, RPM, MOA, bulletSpeed, capacity, aimDirection, parent) {
         super(name, position, width, height, vector, rigidBody);
         this.rpm = RPM;
         this.fpr = FPS / (this.rpm / 60);
@@ -31,17 +29,22 @@ export class MachineGun extends Entity {
         this.firedBullets = [];
         this.capacity = capacity;
         this.remaining = this.capacity;
+        this.aimDirection = aimDirection;
         this.parent = parent;
     }
 
-    fire() {
+    /**
+     * 
+     * @param {number} direction 狙う方向（弧度法, y-が90°）
+     */
+    fire(direction) {
         const MOA = getRandom(-this.moa / 2, this.moa / 2, 1);
         const bulletVector = new Vector(
-            new Point(
-                cos(MOA + 90) * this.bulletSpeed,
-                sin(MOA + 90) * this.bulletSpeed,
-            ),
             getZeroPoint(),
+            new Point(
+                cos(MOA + direction) * this.bulletSpeed,
+                sin(MOA + direction) * this.bulletSpeed,
+            ),
         );
         this.firedBullets.push(
             new Bullet(
@@ -56,10 +59,10 @@ export class MachineGun extends Entity {
         );
     }
 
-    operateFire() {
+    operateFire(trigger) {
         if (this.canFire) {
-            if (key[" "]) {
-                this.fire();
+            if (trigger) {
+                this.fire(this.aimDirection);
                 this.canFire = false;
             }
         }
@@ -82,27 +85,15 @@ export class MachineGun extends Entity {
             else i++;
         }
 
-        for (const enemy of enemies) {
-            let j = 0;
-            while (j < this.firedBullets.length) {
-                if (this.firedBullets[j].checkHit(enemy)) {
-                    enemy.takeDamage(10);
-                    this.firedBullets.splice(j, 1);
-                    break;
-                }
-                else j++;
-            }
-        }
-
         for (const bullet of this.firedBullets) {
             bullet.move(true);
             bullet.draw();
         }
     }
 
-    update() {
-        this.follow(player);
-        this.operateFire();
+    update(trigger) {
+        this.follow(this.parent);
+        this.operateFire(trigger);
         this.operateBullets();
     }
 }

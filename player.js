@@ -111,7 +111,7 @@ export class Player extends Entity {
     updata() {
         this.move(false);
         this.control();
-        this.machineGun.update();
+        this.machineGun.update(key[" "]);
         this.draw();
     }
 }
@@ -138,5 +138,6 @@ export const player = new Player(
         5,
         300,
         1200,
+        -90,
     ),
 );
