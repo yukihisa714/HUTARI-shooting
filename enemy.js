@@ -109,7 +109,7 @@ export const ENEMIES_DATA = [
         dpa: 10,
         spa: 1,
         dps: 10,
-        shield: 100,
+        shield: 50,
 
         getClass: function (position) {
             return new Enemy(
