@@ -296,6 +296,18 @@ class RangeAttackEnemy extends Enemy {
         const vectorToPlayer = this.getVectorToPlayer();
         const aimDirection = vectorToPlayer.getTheta();
         this.machineGun.aimDirection = aimDirection;
+
+        let i = 0;
+        while (i < this.machineGun.firedBullets.length) {
+            const bullets = this.machineGun.firedBullets;
+            if (bullets[i].checkHit(player)) {
+                player.hp -= 10;
+                bullets.splice(i, 1);
+            }
+            else {
+                i++;
+            }
+        }
     }
 
     update() {
