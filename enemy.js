@@ -306,6 +306,20 @@ export class ShieldEnemy extends StandardEnemy {
 }
 
 
+/**
+ * 遠隔攻撃の敵のクラス
+ * @param {string} name 名前
+ * @param {Point} position 座標
+ * @param {number} width 横幅
+ * @param {number} height 縦幅
+ * @param {Vector} vector 速度
+ * @param {string} color 色
+ * @param {number} speed 速さ
+ * @param {number} HP 体力
+ * @param {number} DPA damage/attack
+ * @param {number} SPA second/attack
+ * @param {MachineGun} machineGun 機銃
+ */
 class RangeAttackEnemy extends StandardEnemy {
     constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, machineGun) {
         super(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
@@ -382,3 +396,4 @@ export function operateEnemies() {
         else i++;
     }
 }
+
