@@ -16,10 +16,9 @@ export const ENEMIES_DATA = [
         dpa: 10,
         spa: 1,
         dps: 10,
-        shield: 0,
 
         getClass: function (position) {
-            return new Enemy(
+            return new StandardEnemy(
                 this.name,
                 position,
                 this.w,
@@ -31,7 +30,6 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-                this.shield,
             )
         }
     },
@@ -47,10 +45,9 @@ export const ENEMIES_DATA = [
         dpa: 5,
         spa: 0.5,
         dps: 10,
-        shield: 0,
 
         getClass: function (position) {
-            return new Enemy(
+            return new StandardEnemy(
                 this.name,
                 position,
                 this.w,
@@ -62,7 +59,6 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-                this.shield,
             )
         }
     },
@@ -78,10 +74,9 @@ export const ENEMIES_DATA = [
         dpa: 25,
         spa: 2,
         dps: 12.5,
-        shield: 0,
 
         getClass: function (position) {
-            return new Enemy(
+            return new StandardEnemy(
                 this.name,
                 position,
                 this.w,
@@ -93,7 +88,6 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-                this.shield,
             )
         }
     },
@@ -112,7 +106,7 @@ export const ENEMIES_DATA = [
         shield: 50,
 
         getClass: function (position) {
-            return new Enemy(
+            return new ShieldEnemy(
                 this.name,
                 position,
                 this.w,
@@ -140,7 +134,6 @@ export const ENEMIES_DATA = [
         dpa: 2,
         spa: 1,
         dps: 2,
-        shield: 0,
 
         getClass: function (position) {
             return new RangeAttackEnemy(
@@ -155,7 +148,6 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-                this.shield,
                 new MachineGun(
                     "machineGun",
                     position,
@@ -176,7 +168,7 @@ export const ENEMIES_DATA = [
 
 
 /**
- * 敵のクラス
+ * 標準の敵のクラス
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -187,10 +179,9 @@ export const ENEMIES_DATA = [
  * @param {number} HP 体力
  * @param {number} DPA damage/attack
  * @param {number} SPA second/attack
- * @param {number} shieldHP シールドの有無
  */
-export class Enemy extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHP) {
+export class StandardEnemy extends Entity {
+    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA) {
         super(name, position, width, height, vector, rigidBody);
         this.color = color;
         this.speed = speed;
@@ -201,11 +192,6 @@ export class Enemy extends Entity {
         this.dps = this.dpa * this.spa;
         this.attackCount = 0;
         this.canAttack = true;
-        this.shieldHp = shieldHP;
-        this.shieldHpMax = shieldHP;
-        this.shieldRadiusMax = Math.max(this.w, this.h) * Math.sqrt(2) * 0.75;
-        this.shieldRadiusMin = Math.max(this.w, this.h) / 2;
-        this.updateShield();
     }
 
     getVectorToPlayer() {
@@ -241,6 +227,46 @@ export class Enemy extends Entity {
         }
     }
 
+    draw() {
+        con.fillStyle = this.color;
+        con.fillRect(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.w, this.h);
+
+        con.fillStyle = "#fff";
+        con.fillText(this.hp, this.pos.x, this.pos.y);
+    }
+
+    update() {
+        this.chasePlayer();
+        this.move(true);
+        this.attack();
+        this.draw();
+    }
+}
+
+/**
+ * シールドの敵のクラス
+ * @param {string} name 名前
+ * @param {Point} position 座標
+ * @param {number} width 横幅
+ * @param {number} height 縦幅
+ * @param {Vector} vector 速度
+ * @param {string} color 色
+ * @param {number} speed 速さ
+ * @param {number} HP 体力
+ * @param {number} DPA damage/attack
+ * @param {number} SPA second/attack
+ * @param {number} shieldHP シールドの体力
+ */
+export class ShieldEnemy extends StandardEnemy {
+    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHp) {
+        super(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
+        this.shieldHp = shieldHp;
+        this.shieldHpMax = this.shieldHp;
+        this.shieldRadiusMax = Math.max(this.w, this.h) * Math.sqrt(2) * 0.75;
+        this.shieldRadiusMin = Math.max(this.w, this.h) / 2;
+        this.updateShield();
+    }
+
     controlCollision() {
         if (this.shieldHp > 0) {
             this.rigidBody.mTop = this.shieldRadius;
@@ -254,12 +280,8 @@ export class Enemy extends Entity {
         this.shieldRadius = this.shieldRadiusMin + (this.shieldRadiusMax - this.shieldRadiusMin) * this.shieldHp / this.shieldHpMax;
     }
 
-    draw() {
-        con.fillStyle = this.color;
-        con.fillRect(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.w, this.h);
-
+    drawShield() {
         if (this.shieldHp > 0) {
-
             con.beginPath();
             con.arc(this.pos.x, this.pos.y, this.shieldRadius, 0, Math.PI * 2, false);
             con.closePath();
@@ -269,9 +291,6 @@ export class Enemy extends Entity {
             con.storkeStyle = "#fff";
             con.stroke();
         }
-
-        con.fillStyle = "#fff";
-        con.fillText(this.hp, this.pos.x, this.pos.y);
     }
 
     update() {
@@ -281,13 +300,15 @@ export class Enemy extends Entity {
         this.controlCollision();
         this.updateShield();
         this.draw();
+        this.drawShield();
     }
+
 }
 
 
-class RangeAttackEnemy extends Enemy {
-    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHP, machineGun) {
-        super(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHP);
+class RangeAttackEnemy extends StandardEnemy {
+    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, machineGun) {
+        super(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
         this.machineGun = machineGun;
         this.machineGun.parent = this;
     }
@@ -314,8 +335,6 @@ class RangeAttackEnemy extends Enemy {
         this.chasePlayer();
         this.move(true);
         this.attack();
-        this.controlCollision();
-        this.updateShield();
         this.rangeAttack();
         this.machineGun.update(true);
         this.draw();
