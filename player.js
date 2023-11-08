@@ -2,7 +2,7 @@ import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
 import { Point, Vector, Square } from "./class.js";
 import { getZeroVector } from "./function.js";
 import { MachineGun } from "./machineGun.js";
-import { Entity } from "./entity.js";
+import { Entity, ENTITY_TYPES } from "./entity.js";
 
 export const DEFAULT_PLAYER = {
     posX: CAN_W / 2,
@@ -28,8 +28,8 @@ export const DEFAULT_PLAYER = {
  * @param {MachineGun} machineGun 機銃
  */
 export class Player extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, maxSpeed, accel, HP, machineGun) {
-        super(name, position, width, height, vector, rigidBody);
+    constructor(type, name, position, width, height, vector, rigidBody, maxSpeed, accel, HP, machineGun) {
+        super(type, name, position, width, height, vector, rigidBody);
         this.speed = maxSpeed;
         this.accel = accel;
         this.hp = HP;
@@ -118,6 +118,7 @@ export class Player extends Entity {
 
 
 export const player = new Player(
+    ENTITY_TYPES[1],
     "player",
     new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
     20,
@@ -128,6 +129,7 @@ export const player = new Player(
     DEFAULT_PLAYER.accel,
     100,
     new MachineGun(
+        ENTITY_TYPES[0],
         "machineGun",
         new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
         0,
@@ -139,5 +141,6 @@ export const player = new Player(
         300,
         1200,
         -90,
+        ENTITY_TYPES[2],
     ),
 );

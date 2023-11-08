@@ -14,9 +14,10 @@ import { Entity } from "./entity.js";
  * @param {number} length 弾の残像の長さ
  */
 export class Bullet extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, length) {
-        super(name, position, width, height, vector, rigidBody);
+    constructor(type, name, position, width, height, vector, rigidBody, length, targetType) {
+        super(type, name, position, width, height, vector, rigidBody);
         this.length = length;
+        this.targetType = targetType;
         this.isAlive = true;
     }
 

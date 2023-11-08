@@ -3,7 +3,7 @@ import { Point, Vector, Square } from "./class.js";
 import { player } from "./player.js";
 import { getZeroVector } from "./function.js";
 import { MachineGun } from "./machineGun.js";
-import { Entity } from "./entity.js";
+import { Entity, ENTITY_TYPES } from "./entity.js";
 import { FIRED_BULLETS } from "./bullet.js";
 
 export const ENEMIES_DATA = [
@@ -21,6 +21,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new StandardEnemy(
+                ENTITY_TYPES[2],
                 this.name,
                 position,
                 this.w,
@@ -50,6 +51,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new StandardEnemy(
+                ENTITY_TYPES[2],
                 this.name,
                 position,
                 this.w,
@@ -79,6 +81,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new StandardEnemy(
+                ENTITY_TYPES[2],
                 this.name,
                 position,
                 this.w,
@@ -109,6 +112,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new ShieldEnemy(
+                ENTITY_TYPES[2],
                 this.name,
                 position,
                 this.w,
@@ -139,6 +143,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new RangeAttackEnemy(
+                ENTITY_TYPES[2],
                 this.name,
                 position,
                 this.w,
@@ -151,6 +156,7 @@ export const ENEMIES_DATA = [
                 this.dpa,
                 this.spa,
                 new MachineGun(
+                    ENTITY_TYPES[0],
                     "machineGun",
                     position,
                     0,
@@ -162,6 +168,7 @@ export const ENEMIES_DATA = [
                     150,
                     1200,
                     0,
+                    ENTITY_TYPES[1],
                 ),
             )
         }
@@ -183,8 +190,8 @@ export const ENEMIES_DATA = [
  * @param {number} SPA second/attack
  */
 export class StandardEnemy extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA) {
-        super(name, position, width, height, vector, rigidBody);
+    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA) {
+        super(type, name, position, width, height, vector, rigidBody);
         this.color = color;
         this.speed = speed;
         this.hp = HP;
@@ -260,8 +267,8 @@ export class StandardEnemy extends Entity {
  * @param {number} shieldHP シールドの体力
  */
 export class ShieldEnemy extends StandardEnemy {
-    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHp) {
-        super(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
+    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHp) {
+        super(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
         this.shieldHp = shieldHp;
         this.shieldHpMax = this.shieldHp;
         this.shieldRadiusMax = Math.max(this.w, this.h) * Math.sqrt(2) * 0.75;
@@ -323,8 +330,8 @@ export class ShieldEnemy extends StandardEnemy {
  * @param {MachineGun} machineGun 機銃
  */
 class RangeAttackEnemy extends StandardEnemy {
-    constructor(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, machineGun) {
-        super(name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
+    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, machineGun) {
+        super(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
         this.machineGun = machineGun;
         this.machineGun.parent = this;
     }
@@ -335,6 +342,7 @@ class RangeAttackEnemy extends StandardEnemy {
         this.machineGun.aimDirection = aimDirection;
 
         for (const bullet of FIRED_BULLETS) {
+            if (bullet.targetType !== ENTITY_TYPES[1]) continue;
             if (bullet.checkHit(player)) {
                 player.hp -= 10;
                 bullet.isAlive = false;
@@ -366,6 +374,7 @@ console.log(enemies);
 export function operateEnemies() {
     for (const enemy of enemies) {
         for (const bullet of FIRED_BULLETS) {
+            if (bullet.targetType !== ENTITY_TYPES[2]) continue;
             if (bullet.checkHit(enemy)) {
                 enemy.takeDamage(10);
                 bullet.isAlive = false;
@@ -376,15 +385,14 @@ export function operateEnemies() {
     let i = 0;
     while (i < enemies.length) {
         enemies[i].update();
-        console.log(enemies[3].hp);
         if (enemies[i].hp <= 0) {
             const name = enemies[i].name;
-            // if (player.enemyKills[name]) {
-            //     player.enemyKills[name]++;
-            // }
-            // else {
-            //     player.enemyKills[name] = 1;
-            // }
+            if (player.enemyKills[name]) {
+                player.enemyKills[name]++;
+            }
+            else {
+                player.enemyKills[name] = 1;
+            }
             enemies.splice(i, 1);
         }
         else i++;

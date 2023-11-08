@@ -15,7 +15,8 @@ export const ENTITY_TYPES = ["empty", "player", "enemy", "item"];
  * @param {Square} rigidBody 当たり判定の剛体
  */
 export class Entity {
-    constructor(name, position, width, height, vector, rigidBody) {
+    constructor(type, name, position, width, height, vector, rigidBody) {
+        this.type = type;
         this.name = name;
         this.pos = position;
         this.w = width;

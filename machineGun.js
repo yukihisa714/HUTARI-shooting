@@ -1,8 +1,8 @@
 import { FPS } from "./option.js";
 import { getRandom, sin, cos, getZeroPoint } from "./function.js";
 import { Point, Vector } from "./class.js";
+import { Entity, ENTITY_TYPES } from "./entity.js";
 import { Bullet, FIRED_BULLETS } from "./bullet.js";
-import { Entity } from "./entity.js";
 
 
 /**
@@ -19,8 +19,8 @@ import { Entity } from "./entity.js";
  * @param {Entity} parent 親のエンティティ
  */
 export class MachineGun extends Entity {
-    constructor(name, position, width, height, vector, rigidBody, RPM, MOA, bulletSpeed, capacity, aimDirection, parent) {
-        super(name, position, width, height, vector, rigidBody);
+    constructor(type, name, position, width, height, vector, rigidBody, RPM, MOA, bulletSpeed, capacity, aimDirection, targetType, parent) {
+        super(type, name, position, width, height, vector, rigidBody);
         this.rpm = RPM;
         this.fpr = FPS / (this.rpm / 60);
         this.moa = MOA;
@@ -31,6 +31,7 @@ export class MachineGun extends Entity {
         this.capacity = capacity;
         this.remaining = this.capacity;
         this.aimDirection = aimDirection;
+        this.targetType = targetType;
         this.parent = parent;
     }
 
@@ -50,6 +51,7 @@ export class MachineGun extends Entity {
         // this.firedBullets.push(
         FIRED_BULLETS.push(
             new Bullet(
+                ENTITY_TYPES[0],
                 "bullet",
                 new Point(this.pos.x, this.pos.y),
                 1,
@@ -57,6 +59,7 @@ export class MachineGun extends Entity {
                 bulletVector,
                 undefined,
                 10,
+                this.targetType,
             )
         );
     }
