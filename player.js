@@ -1,7 +1,8 @@
 import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
-import { Point, Vector, Entity, Square } from "./class.js";
+import { Point, Vector, Square } from "./class.js";
 import { getZeroVector } from "./function.js";
 import { MachineGun } from "./machineGun.js";
+import { Entity } from "./entity.js";
 
 export const DEFAULT_PLAYER = {
     posX: CAN_W / 2,

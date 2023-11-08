@@ -1,8 +1,9 @@
 import { FPS, con } from "./option.js";
-import { Point, Vector, Entity, Square } from "./class.js";
+import { Point, Vector, Square } from "./class.js";
 import { player } from "./player.js";
 import { getZeroVector } from "./function.js";
 import { MachineGun } from "./machineGun.js";
+import { Entity } from "./entity.js";
 
 export const ENEMIES_DATA = [
     {

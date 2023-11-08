@@ -1,7 +1,8 @@
 import { FPS } from "./option.js";
 import { getRandom, sin, cos, getZeroPoint } from "./function.js";
-import { Point, Vector, Entity } from "./class.js";
+import { Point, Vector } from "./class.js";
 import { Bullet } from "./bullet.js";
+import { Entity } from "./entity.js";
 
 
 /**

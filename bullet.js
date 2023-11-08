@@ -1,5 +1,6 @@
 import { con } from "./option.js";
-import { Point, Vector, Entity, Square, } from "./class.js";
+import { Point, Vector, Square, } from "./class.js";
+import { Entity } from "./entity.js";
 
 
 /**
@@ -37,4 +38,10 @@ export class Bullet extends Entity {
         con.closePath();
         con.stroke();
     }
+}
+
+export const FIRED_BULLETS = [];
+
+export function updateBullets() {
+
 }
