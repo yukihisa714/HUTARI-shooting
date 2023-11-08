@@ -17,6 +17,7 @@ export class Bullet extends Entity {
     constructor(name, position, width, height, vector, rigidBody, length) {
         super(name, position, width, height, vector, rigidBody);
         this.length = length;
+        this.isAlive = true;
     }
 
     /**
@@ -43,5 +44,25 @@ export class Bullet extends Entity {
 export const FIRED_BULLETS = [];
 
 export function updateBullets() {
+    let i = 0;
+    while (i < FIRED_BULLETS.length) {
+        if (FIRED_BULLETS[i].isAlive === false) {
+            FIRED_BULLETS.splice(i, 1);
+        }
+        else {
+            i++;
+        }
+    }
 
+    for (const bullet of FIRED_BULLETS) {
+        bullet.move(true);
+
+        if (bullet.checkInScreen() === false) {
+            bullet.isAlive = false;
+        }
+
+        bullet.draw();
+    }
+
+    con.fillText(FIRED_BULLETS.length, 10, 10);
 }

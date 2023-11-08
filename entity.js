@@ -1,6 +1,10 @@
 import { CAN_W, CAN_H, FPS, con } from "./option.js";
 import { Square } from "./class.js";
 
+
+export const ENTITY_TYPES = ["empty", "player", "enemy", "item"];
+
+
 /**
  * エンティティのクラス
  * @param {string} name 名前
@@ -53,6 +57,14 @@ export class Entity {
     follow(entity) {
         this.pos.x = entity.pos.x;
         this.pos.y = entity.pos.y;
+    }
+
+    checkInScreen() {
+        let isInScreen = true;
+        if (this.rigidBody.left < 0 || CAN_W < this.rigidBody.right) isInScreen = false;
+        if (this.rigidBody.top < 0 || CAN_H < this.rigidBody.bottom) isInScreen = false;
+
+        return isInScreen;
     }
 
     drawRigidBody() {

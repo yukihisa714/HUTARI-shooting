@@ -4,6 +4,7 @@ import { player } from "./player.js";
 import { getZeroVector } from "./function.js";
 import { MachineGun } from "./machineGun.js";
 import { Entity } from "./entity.js";
+import { FIRED_BULLETS } from "./bullet.js";
 
 export const ENEMIES_DATA = [
     {
@@ -333,15 +334,10 @@ class RangeAttackEnemy extends StandardEnemy {
         const aimDirection = vectorToPlayer.getTheta();
         this.machineGun.aimDirection = aimDirection;
 
-        let i = 0;
-        while (i < this.machineGun.firedBullets.length) {
-            const bullets = this.machineGun.firedBullets;
-            if (bullets[i].checkHit(player)) {
+        for (const bullet of FIRED_BULLETS) {
+            if (bullet.checkHit(player)) {
                 player.hp -= 10;
-                bullets.splice(i, 1);
-            }
-            else {
-                i++;
+                bullet.isAlive = false;
             }
         }
     }
@@ -359,42 +355,40 @@ class RangeAttackEnemy extends StandardEnemy {
 
 
 export const enemies = [
-    ENEMIES_DATA[0].getClass(new Point(0, 0)),
-    ENEMIES_DATA[1].getClass(new Point(150, 0)),
-    ENEMIES_DATA[2].getClass(new Point(300, 0)),
-    ENEMIES_DATA[3].getClass(new Point(125, 0)),
-    ENEMIES_DATA[4].getClass(new Point(225, 0)),
+    ENEMIES_DATA[0].getClass(new Point(0, 50)),
+    ENEMIES_DATA[1].getClass(new Point(150, 50)),
+    ENEMIES_DATA[2].getClass(new Point(300, 50)),
+    ENEMIES_DATA[3].getClass(new Point(125, 50)),
+    ENEMIES_DATA[4].getClass(new Point(225, 50)),
 ];
 console.log(enemies);
 
 export function operateEnemies() {
     for (const enemy of enemies) {
-        let j = 0;
-        const bullets = player.machineGun.firedBullets;
-        while (j < bullets.length) {
-            if (bullets[j].checkHit(enemy)) {
+        for (const bullet of FIRED_BULLETS) {
+            if (bullet.checkHit(enemy)) {
                 enemy.takeDamage(10);
-                bullets.splice(j, 1);
-                break;
+                bullet.isAlive = false;
             }
-            else j++;
         }
     }
 
     let i = 0;
     while (i < enemies.length) {
         enemies[i].update();
+        console.log(enemies[3].hp);
         if (enemies[i].hp <= 0) {
             const name = enemies[i].name;
-            if (player.enemyKills[name]) {
-                player.enemyKills[name]++;
-            }
-            else {
-                player.enemyKills[name] = 1;
-            }
+            // if (player.enemyKills[name]) {
+            //     player.enemyKills[name]++;
+            // }
+            // else {
+            //     player.enemyKills[name] = 1;
+            // }
             enemies.splice(i, 1);
         }
         else i++;
     }
+
 }
 

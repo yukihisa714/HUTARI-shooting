@@ -1,7 +1,7 @@
 import { FPS } from "./option.js";
 import { getRandom, sin, cos, getZeroPoint } from "./function.js";
 import { Point, Vector } from "./class.js";
-import { Bullet } from "./bullet.js";
+import { Bullet, FIRED_BULLETS } from "./bullet.js";
 import { Entity } from "./entity.js";
 
 
@@ -27,7 +27,7 @@ export class MachineGun extends Entity {
         this.bulletSpeed = bulletSpeed;
         this.canFire = true;
         this.rateCount = 0;
-        this.firedBullets = [];
+        // this.firedBullets = [];
         this.capacity = capacity;
         this.remaining = this.capacity;
         this.aimDirection = aimDirection;
@@ -47,7 +47,8 @@ export class MachineGun extends Entity {
                 sin(MOA + direction) * this.bulletSpeed,
             ),
         );
-        this.firedBullets.push(
+        // this.firedBullets.push(
+        FIRED_BULLETS.push(
             new Bullet(
                 "bullet",
                 new Point(this.pos.x, this.pos.y),
@@ -76,25 +77,9 @@ export class MachineGun extends Entity {
         }
     }
 
-    operateBullets() {
-        let i = 0;
-        while (i < this.firedBullets.length) {
-            const bullet = this.firedBullets[i];
-            if (bullet.pos.y + bullet.length < 0) {
-                this.firedBullets.splice(i, 1);
-            }
-            else i++;
-        }
-
-        for (const bullet of this.firedBullets) {
-            bullet.move(true);
-            bullet.draw();
-        }
-    }
 
     update(trigger) {
         this.follow(this.parent);
         this.operateFire(trigger);
-        this.operateBullets();
     }
 }
