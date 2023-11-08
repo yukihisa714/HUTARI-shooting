@@ -1,5 +1,7 @@
 import { Point, Vector } from "./class.js";
 
+///////////////////////////////////////////////////////////////
+
 /**
  * 精度を指定して乱数を取得する関数
  * @param {number} minimum 以上
@@ -20,6 +22,8 @@ export function getRandom(minimum, maximum, precision) {
     return randomNum / factor;
 }
 
+///////////////////////////////////////////////////////////////
+
 /**
  * 度数法から弧度法に変換する関数
  * @param {number} degrees 度数法
@@ -36,6 +40,8 @@ export function degreesToRadians(degrees) {
 export function radiansToDegrees(radians) {
     return radians * 180 / Math.PI;
 }
+
+///////////////////////////////////////////////////////////////
 
 /**
  * sin
@@ -63,6 +69,8 @@ export function cos(theta) {
 export function tan(theta) {
     return Math.tan(degreesToRadians(theta));
 }
+
+///////////////////////////////////////////////////////////////
 
 /**
  * 0 Pointを取得する関数

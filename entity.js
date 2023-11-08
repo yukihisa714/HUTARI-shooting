@@ -1,8 +1,7 @@
 import { CAN_W, CAN_H, FPS, con } from "./option.js";
 import { Square } from "./class.js";
 
-
-// export const ENTITY_TYPES = ["empty", "player", "enemy", "item"];
+///////////////////////////////////////////////////////////////
 
 export const ENTITY_TYPES = {
     empty: 0,
@@ -11,9 +10,11 @@ export const ENTITY_TYPES = {
     item: 3,
 };
 
+///////////////////////////////////////////////////////////////
+
 /**
  * エンティティのクラス
- * @param {}
+ * @param {number} type エンティティタイプ
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅

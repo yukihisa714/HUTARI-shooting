@@ -6,6 +6,8 @@ import { FIRED_BULLETS } from "./bullet.js";
 import { MachineGun } from "./machineGun.js";
 import { player } from "./player.js";
 
+///////////////////////////////////////////////////////////////
+
 export const ENEMIES_DATA = [
     {
         name: "Trooper",
@@ -175,9 +177,11 @@ export const ENEMIES_DATA = [
     },
 ];
 
+///////////////////////////////////////////////////////////////
 
 /**
  * 標準の敵のクラス
+ * @param {number} type エンティティタイプ
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -252,8 +256,11 @@ export class StandardEnemy extends Entity {
     }
 }
 
+///////////////////////////////////////////////////////////////
+
 /**
  * シールドの敵のクラス
+ * @param {number} type エンティティタイプ
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -314,9 +321,11 @@ export class ShieldEnemy extends StandardEnemy {
 
 }
 
+///////////////////////////////////////////////////////////////
 
 /**
  * 遠隔攻撃の敵のクラス
+ * @param {number} type エンティティタイプ
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -336,31 +345,24 @@ class RangeAttackEnemy extends StandardEnemy {
         this.machineGun.parent = this;
     }
 
-    rangeAttack() {
+    aim() {
         const vectorToPlayer = this.getVectorToPlayer();
         const aimDirection = vectorToPlayer.getTheta();
         this.machineGun.aimDirection = aimDirection;
-
-        for (const bullet of FIRED_BULLETS) {
-            if (bullet.targetType !== ENTITY_TYPES.player) continue;
-            if (bullet.checkHit(player)) {
-                player.hp -= 10;
-                bullet.isAlive = false;
-            }
-        }
     }
 
     update() {
         this.chasePlayer();
         this.move(true);
         this.attack();
-        this.rangeAttack();
+        this.aim();
         this.machineGun.update(true);
         this.draw();
     }
 
 }
 
+///////////////////////////////////////////////////////////////
 
 export const enemies = [
     ENEMIES_DATA[0].getClass(new Point(0, 50)),
@@ -371,17 +373,9 @@ export const enemies = [
 ];
 console.log(enemies);
 
-export function operateEnemies() {
-    for (const enemy of enemies) {
-        for (const bullet of FIRED_BULLETS) {
-            if (bullet.targetType !== ENTITY_TYPES.enemy) continue;
-            if (bullet.checkHit(enemy)) {
-                enemy.takeDamage(10);
-                bullet.isAlive = false;
-            }
-        }
-    }
+///////////////////////////////////////////////////////////////
 
+export function operateEnemies() {
     let i = 0;
     while (i < enemies.length) {
         enemies[i].update();

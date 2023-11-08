@@ -4,6 +4,8 @@ import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { MachineGun } from "./machineGun.js";
 
+///////////////////////////////////////////////////////////////
+
 export const DEFAULT_PLAYER = {
     posX: CAN_W / 2,
     posY: CAN_H * 0.8,
@@ -14,9 +16,11 @@ export const DEFAULT_PLAYER = {
     bulletSpeed: 300,
 };
 
+///////////////////////////////////////////////////////////////
 
 /**
  * プレイヤーのクラス
+ * @param {number} type エンティティタイプ
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -102,7 +106,6 @@ export class Player extends Entity {
         con.fill();
 
         con.fillStyle = "#fff";
-        // con.fillText(this.bullets.length, 10, 10);
         con.fillText(this.hp, this.pos.x, this.pos.y + 20);
 
         this.drawRigidBody();
@@ -116,6 +119,7 @@ export class Player extends Entity {
     }
 }
 
+///////////////////////////////////////////////////////////////
 
 export const player = new Player(
     ENTITY_TYPES.player,

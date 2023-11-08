@@ -1,10 +1,14 @@
 import { con } from "./option.js";
 import { Point, Vector, Square, } from "./class.js";
-import { Entity } from "./entity.js";
+import { Entity, ENTITY_TYPES } from "./entity.js";
+import { player } from "./player.js";
+import { enemies } from "./enemy.js";
 
+///////////////////////////////////////////////////////////////
 
 /**
  * 弾丸のクラス
+ * @param {number} type エンティティタイプ
  * @param {number} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -24,7 +28,7 @@ export class Bullet extends Entity {
     /**
      * 弾の衝突判定
      * @param {Entity} entity 敵
-     * @returns {boolean}
+     * @returns {boolean} 衝突の有無
      */
     checkHit(entity) {
         return this.rigidBody.collision(entity.rigidBody);
@@ -42,9 +46,38 @@ export class Bullet extends Entity {
     }
 }
 
+///////////////////////////////////////////////////////////////
+
 export const FIRED_BULLETS = [];
 
 export function updateBullets() {
+    for (const bullet of FIRED_BULLETS) {
+        bullet.move(true);
+        bullet.draw();
+
+        // 画面外に出たら消す
+        if (bullet.checkInScreen() === false) {
+            bullet.isAlive = false;
+        }
+
+        // ヒットしたら消す
+        if (bullet.targetType === ENTITY_TYPES.player) {
+            if (bullet.checkHit(player)) {
+                player.hp -= 10;
+                bullet.isAlive = false;
+            }
+        }
+        else if (bullet.targetType === ENTITY_TYPES.enemy) {
+            for (const enemy of enemies) {
+                if (bullet.checkHit(enemy)) {
+                    enemy.takeDamage(10);
+                    bullet.isAlive = false;
+                }
+            }
+        }
+    }
+
+
     let i = 0;
     while (i < FIRED_BULLETS.length) {
         if (FIRED_BULLETS[i].isAlive === false) {
@@ -53,16 +86,6 @@ export function updateBullets() {
         else {
             i++;
         }
-    }
-
-    for (const bullet of FIRED_BULLETS) {
-        bullet.move(true);
-
-        if (bullet.checkInScreen() === false) {
-            bullet.isAlive = false;
-        }
-
-        bullet.draw();
     }
 
     con.fillText(FIRED_BULLETS.length, 10, 10);

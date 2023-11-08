@@ -4,9 +4,11 @@ import { Point, Vector } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { Bullet, FIRED_BULLETS } from "./bullet.js";
 
+///////////////////////////////////////////////////////////////
 
 /**
  * 機銃のクラス
+ * @param {number} type エンティティタイプ
  * @param {string} name 名前
  * @param {Point} position 座標
  * @param {number} width 横幅
@@ -35,7 +37,7 @@ export class MachineGun extends Entity {
     }
 
     /**
-     * 
+     * 弾を発射するメソッド
      * @param {number} direction 狙う方向（弧度法, y-が90°）
      */
     fire(direction) {
@@ -47,7 +49,7 @@ export class MachineGun extends Entity {
                 sin(MOA + direction) * this.bulletSpeed,
             ),
         );
-        // this.firedBullets.push(
+
         FIRED_BULLETS.push(
             new Bullet(
                 ENTITY_TYPES.empty,
