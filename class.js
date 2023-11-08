@@ -26,7 +26,7 @@ export class Vector {
     }
 
     /**
-     * ベクトルの長さを取得する関数
+     * ベクトルの長さを取得するメソッド
      * @returns {number} ベクトルの長さ
      */
     getLength() {
@@ -34,8 +34,9 @@ export class Vector {
     }
 
     /**
-     * 乗算
+     * ベクトルを乗算するメソッド
      * @param {number} multiplier 掛ける数
+     * @returns {Vector} 乗算されたベクトル
      */
     multiplication(multiplier) {
         return new Vector(
@@ -47,10 +48,19 @@ export class Vector {
         )
     }
 
+    /**
+     * ベクトルの大きさを変えるメソッド
+     * @param {number} length ベクトルの大きさ
+     * @returns {Vector} 大きさが変更されたベクトル
+     */
     changeLength(length) {
         return this.multiplication(length / this.getLength());
     }
 
+    /**
+     * ベクトルの角度を弧度法で取得するメソッド
+     * @returns {number} 0~180までの角度
+     */
     getTheta() {
         return radiansToDegrees(Math.atan2(this.y, this.x));
     }

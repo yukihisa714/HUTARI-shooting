@@ -27,7 +27,6 @@ export class MachineGun extends Entity {
         this.bulletSpeed = bulletSpeed;
         this.canFire = true;
         this.rateCount = 0;
-        // this.firedBullets = [];
         this.capacity = capacity;
         this.remaining = this.capacity;
         this.aimDirection = aimDirection;
@@ -51,7 +50,7 @@ export class MachineGun extends Entity {
         // this.firedBullets.push(
         FIRED_BULLETS.push(
             new Bullet(
-                ENTITY_TYPES[0],
+                ENTITY_TYPES.empty,
                 "bullet",
                 new Point(this.pos.x, this.pos.y),
                 1,

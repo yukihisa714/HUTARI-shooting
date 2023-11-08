@@ -1,10 +1,10 @@
 import { FPS, con } from "./option.js";
-import { Point, Vector, Square } from "./class.js";
-import { player } from "./player.js";
 import { getZeroVector } from "./function.js";
-import { MachineGun } from "./machineGun.js";
+import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { FIRED_BULLETS } from "./bullet.js";
+import { MachineGun } from "./machineGun.js";
+import { player } from "./player.js";
 
 export const ENEMIES_DATA = [
     {
@@ -21,7 +21,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new StandardEnemy(
-                ENTITY_TYPES[2],
+                ENTITY_TYPES.enemy,
                 this.name,
                 position,
                 this.w,
@@ -51,7 +51,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new StandardEnemy(
-                ENTITY_TYPES[2],
+                ENTITY_TYPES.enemy,
                 this.name,
                 position,
                 this.w,
@@ -81,7 +81,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new StandardEnemy(
-                ENTITY_TYPES[2],
+                ENTITY_TYPES.enemy,
                 this.name,
                 position,
                 this.w,
@@ -112,7 +112,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new ShieldEnemy(
-                ENTITY_TYPES[2],
+                ENTITY_TYPES.enemy,
                 this.name,
                 position,
                 this.w,
@@ -143,7 +143,7 @@ export const ENEMIES_DATA = [
 
         getClass: function (position) {
             return new RangeAttackEnemy(
-                ENTITY_TYPES[2],
+                ENTITY_TYPES.enemy,
                 this.name,
                 position,
                 this.w,
@@ -156,7 +156,7 @@ export const ENEMIES_DATA = [
                 this.dpa,
                 this.spa,
                 new MachineGun(
-                    ENTITY_TYPES[0],
+                    ENTITY_TYPES.empty,
                     "machineGun",
                     position,
                     0,
@@ -168,7 +168,7 @@ export const ENEMIES_DATA = [
                     150,
                     1200,
                     0,
-                    ENTITY_TYPES[1],
+                    ENTITY_TYPES.player,
                 ),
             )
         }
@@ -342,7 +342,7 @@ class RangeAttackEnemy extends StandardEnemy {
         this.machineGun.aimDirection = aimDirection;
 
         for (const bullet of FIRED_BULLETS) {
-            if (bullet.targetType !== ENTITY_TYPES[1]) continue;
+            if (bullet.targetType !== ENTITY_TYPES.player) continue;
             if (bullet.checkHit(player)) {
                 player.hp -= 10;
                 bullet.isAlive = false;
@@ -374,7 +374,7 @@ console.log(enemies);
 export function operateEnemies() {
     for (const enemy of enemies) {
         for (const bullet of FIRED_BULLETS) {
-            if (bullet.targetType !== ENTITY_TYPES[2]) continue;
+            if (bullet.targetType !== ENTITY_TYPES.enemy) continue;
             if (bullet.checkHit(enemy)) {
                 enemy.takeDamage(10);
                 bullet.isAlive = false;
