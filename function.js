@@ -101,10 +101,10 @@ export function getZeroVector() {
  */
 export function drawParallelogram(ctx, pos, width, height, fillColor, strokeColor, lineWidth) {
     ctx.beginPath();
-    ctx.lineTo(pos.x + height, pos.y);
+    ctx.lineTo(pos.x, pos.y);
     ctx.lineTo(pos.x + width, pos.y);
     ctx.lineTo(pos.x + width - height, pos.y + height);
-    ctx.lineTo(pos.x, pos.y + height);
+    ctx.lineTo(pos.x - height, pos.y + height);
     ctx.closePath();
 
     if (fillColor) {
