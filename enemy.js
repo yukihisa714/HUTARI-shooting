@@ -2,7 +2,6 @@ import { FPS, con } from "./option.js";
 import { getZeroVector } from "./function.js";
 import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
-import { FIRED_BULLETS } from "./bullet.js";
 import { MachineGun } from "./machineGun.js";
 import { player } from "./player.js";
 
@@ -367,11 +366,11 @@ class RangeAttackEnemy extends StandardEnemy {
 ///////////////////////////////////////////////////////////////
 
 export const enemies = [
-    ENEMIES_DATA[0].getClass(new Point(0, 50)),
-    ENEMIES_DATA[1].getClass(new Point(150, 50)),
-    ENEMIES_DATA[2].getClass(new Point(300, 50)),
-    ENEMIES_DATA[3].getClass(new Point(125, 50)),
-    ENEMIES_DATA[4].getClass(new Point(225, 50)),
+    // ENEMIES_DATA[0].getClass(new Point(0, 50)),
+    // ENEMIES_DATA[1].getClass(new Point(150, 50)),
+    // ENEMIES_DATA[2].getClass(new Point(300, 50)),
+    // ENEMIES_DATA[3].getClass(new Point(125, 50)),
+    // ENEMIES_DATA[4].getClass(new Point(225, 50)),
 ];
 console.log(enemies);
 
