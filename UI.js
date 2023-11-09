@@ -1,3 +1,4 @@
+import { Point } from "./class.js";
 import { drawParallelogram } from "./function.js";
 import { FPS, con } from "./option.js";
 
@@ -19,7 +20,12 @@ export class HealthGauge {
 
     damageAnimation() {
         if (this.damageAnimationHp > this.currentHp) {
-            this.damageAnimationHp -= this.w / 15 / FPS;
+            this.animationCount += this.w / 180 / FPS
+            this.damageAnimationHp -= this.animationCount;
+
+        }
+        else {
+            this.animationCount = 0;
         }
     }
 
@@ -33,10 +39,11 @@ export class HealthGauge {
     }
 
     draw() {
+        drawParallelogram(con, new Point(this.pos.x - 1, this.pos.y - 3), this.w + 8, this.h + 6, "#fff");
         drawParallelogram(con, this.pos, this.w, this.h, "#000");
         drawParallelogram(con, this.pos, this.w * this.damageAnimationHpPercentage, this.h, "#f00");
         drawParallelogram(con, this.pos, this.w * this.hpPercentage, this.h, "#0f0");
-        drawParallelogram(con, this.pos, this.w, this.h, undefined, "#fff", 3);
+        drawParallelogram(con, this.pos, this.w, this.h, undefined, "#000", 1);
 
         con.fillStyle = "#fff";
         con.font = "15px Fantasy";

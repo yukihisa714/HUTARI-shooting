@@ -138,7 +138,7 @@ export const ENEMIES_DATA = [
         h: 20,
         color: "#f00",
         speed: 50,
-        hp: 10,
+        hp: 25,
         dpa: 2,
         spa: 1,
         dps: 2,

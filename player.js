@@ -42,7 +42,7 @@ export class Player extends Entity {
         this.machineGun.parent = this;
         this.enemyKills = {};
 
-        this.healthGauge = new HealthGauge(new Point(25, 475), 265, 15, this.hp);
+        this.healthGauge = new HealthGauge(new Point(25, 480), 260, 10, this.hp);
     }
 
     control() {
