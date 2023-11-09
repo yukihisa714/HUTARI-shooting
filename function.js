@@ -87,3 +87,33 @@ export function getZeroPoint() {
 export function getZeroVector() {
     return new Vector(getZeroPoint(), getZeroPoint());
 }
+
+///////////////////////////////////////////////////////////////
+
+/**
+ * 
+ * @param {} ctx 
+ * @param {Point} pos 
+ * @param {number} w 
+ * @param {number} h 
+ * @param {string} fillColor 
+ * @param {string} strokeColor 
+ */
+export function drawParallelogram(ctx, pos, width, height, fillColor, strokeColor, lineWidth) {
+    ctx.beginPath();
+    ctx.lineTo(pos.x + height, pos.y);
+    ctx.lineTo(pos.x + width, pos.y);
+    ctx.lineTo(pos.x + width - height, pos.y + height);
+    ctx.lineTo(pos.x, pos.y + height);
+    ctx.closePath();
+
+    if (fillColor) {
+        ctx.fillStyle = fillColor;
+        ctx.fill();
+    }
+    if (strokeColor) {
+        ctx.strokeStyle = strokeColor;
+        ctx.lineWidth = lineWidth;
+        ctx.stroke();
+    }
+}

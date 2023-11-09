@@ -1,3 +1,4 @@
+import { drawParallelogram } from "./function.js";
 import { FPS, con } from "./option.js";
 
 export class HealthGauge {
@@ -32,33 +33,38 @@ export class HealthGauge {
     }
 
     draw() {
-        con.fillStyle = "#000";
-        con.fillRect(this.pos.x, this.pos.y, this.w, this.h);
+        // con.fillStyle = "#000";
+        // con.fillRect(this.pos.x, this.pos.y, this.w, this.h);
 
-        con.fillStyle = "#f00";
-        con.fillRect(this.pos.x, this.pos.y, this.w * this.damageAnimationHpPercentage, this.h);
+        // con.fillStyle = "#f00";
+        // con.fillRect(this.pos.x, this.pos.y, this.w * this.damageAnimationHpPercentage, this.h);
 
-        con.fillStyle = "#0f0";
-        con.fillRect(this.pos.x, this.pos.y, this.w * this.hpPercentage, this.h);
+        // con.fillStyle = "#0f0";
+        // con.fillRect(this.pos.x, this.pos.y, this.w * this.hpPercentage, this.h);
 
-        con.strokeStyle = "#fff";
-        con.lineWidth = 3;
-        con.strokeRect(this.pos.x, this.pos.y, this.w, this.h);
+        // con.strokeStyle = "#fff";
+        // con.lineWidth = 3;
+        // con.strokeRect(this.pos.x, this.pos.y, this.w, this.h);
 
-        con.fillStyle = "#fff";
-        con.beginPath();
-        con.lineTo(this.pos.x - 1, this.pos.y - 1);
-        con.lineTo(this.pos.x + this.h + 1, this.pos.y - 1);
-        con.lineTo(this.pos.x - 1, this.pos.y + this.h + 1);
-        con.closePath();
-        con.fill();
+        // con.fillStyle = "#fff";
+        // con.beginPath();
+        // con.lineTo(this.pos.x - 1, this.pos.y - 1);
+        // con.lineTo(this.pos.x + this.h + 1, this.pos.y - 1);
+        // con.lineTo(this.pos.x - 1, this.pos.y + this.h + 1);
+        // con.closePath();
+        // con.fill();
 
-        con.beginPath();
-        con.lineTo(this.pos.x + this.w + 1, this.pos.y - 1);
-        con.lineTo(this.pos.x + this.w + 1, this.pos.y + this.h + 1);
-        con.lineTo(this.pos.x + this.w - this.h - 1, this.pos.y + this.h + 1);
-        con.closePath();
-        con.fill();
+        // con.beginPath();
+        // con.lineTo(this.pos.x + this.w + 1, this.pos.y - 1);
+        // con.lineTo(this.pos.x + this.w + 1, this.pos.y + this.h + 1);
+        // con.lineTo(this.pos.x + this.w - this.h - 1, this.pos.y + this.h + 1);
+        // con.closePath();
+        // con.fill();
+
+        drawParallelogram(con, this.pos, this.w, this.h, "#000");
+        drawParallelogram(con, this.pos, this.w * this.damageAnimationHpPercentage, this.h, "#f00");
+        drawParallelogram(con, this.pos, this.w * this.hpPercentage, this.h, "#0f0");
+        drawParallelogram(con, this.pos, this.w, this.h, undefined, "#fff", 3);
 
         con.fillStyle = "#fff";
         con.font = "15px Fantasy";
