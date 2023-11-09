@@ -246,6 +246,8 @@ export class StandardEnemy extends Entity {
 
         con.fillStyle = "#fff";
         con.fillText(this.hp, this.pos.x, this.pos.y);
+
+        this.drawRigidBody();
     }
 
     update() {

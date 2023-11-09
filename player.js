@@ -2,6 +2,7 @@ import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
 import { getZeroVector } from "./function.js";
 import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
+import { HealthGauge } from "./UI.js";
 import { MachineGun } from "./machineGun.js";
 
 ///////////////////////////////////////////////////////////////
@@ -40,6 +41,8 @@ export class Player extends Entity {
         this.machineGun = machineGun;
         this.machineGun.parent = this;
         this.enemyKills = {};
+
+        this.healthGauge = new HealthGauge(new Point(10, 470), 280, 20, this.hp);
     }
 
     control() {
@@ -116,6 +119,8 @@ export class Player extends Entity {
         this.control();
         this.machineGun.update(key[" "]);
         this.draw();
+        this.healthGauge.currentHp = this.hp;
+        this.healthGauge.update();
     }
 }
 
