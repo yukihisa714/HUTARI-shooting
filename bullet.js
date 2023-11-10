@@ -51,13 +51,14 @@ export class Bullet extends Entity {
 export const FIRED_BULLETS = [];
 
 export function updateBullets() {
-    for (const bullet of FIRED_BULLETS) {
+    bulletLoop: for (const bullet of FIRED_BULLETS) {
         bullet.move(true);
         bullet.draw();
 
         // 画面外に出たら消す
         if (bullet.checkInScreen() === false) {
             bullet.isAlive = false;
+            continue;
         }
 
         // ヒットしたら消す
@@ -65,6 +66,7 @@ export function updateBullets() {
             if (bullet.checkHit(player)) {
                 player.hp -= 10;
                 bullet.isAlive = false;
+                continue;
             }
         }
         else if (bullet.targetType === ENTITY_TYPES.enemy) {
@@ -72,6 +74,7 @@ export function updateBullets() {
                 if (bullet.checkHit(enemy)) {
                     enemy.takeDamage(10);
                     bullet.isAlive = false;
+                    continue bulletLoop;
                 }
             }
         }
