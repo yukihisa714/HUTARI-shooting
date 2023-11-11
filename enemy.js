@@ -233,12 +233,7 @@ export class StandardEnemy extends Entity {
     }
 
     takeDamage(damage) {
-        if (this.shieldHp > 0) {
-            this.shieldHp -= damage;
-        }
-        else {
-            this.hp -= damage;
-        }
+        this.hp -= damage;
     }
 
     draw() {
@@ -284,6 +279,15 @@ export class ShieldEnemy extends StandardEnemy {
         this.shieldRadiusMax = Math.max(this.w, this.h) * Math.sqrt(2) * 0.75;
         this.shieldRadiusMin = Math.max(this.w, this.h) / 2;
         this.updateShield();
+    }
+
+    takeDamage(damage) {
+        if (this.shieldHp > 0) {
+            this.shieldHp -= damage;
+        }
+        else {
+            this.hp -= damage;
+        }
     }
 
     controlCollision() {
