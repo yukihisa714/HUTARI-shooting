@@ -1,12 +1,11 @@
 import { Point } from "./class.js";
+import { Entity } from "./entity.js";
 import { drawParallelogram } from "./function.js";
 import { FPS, con } from "./option.js";
 
-export class HealthGauge {
-    constructor(position, width, height, maxHp) {
-        this.pos = position;
-        this.w = width;
-        this.h = height;
+export class HealthGauge extends Entity {
+    constructor(type, name, position, width, height, vector, rigidBody, maxHp) {
+        super(type, name, position, width, height, vector, rigidBody);
         this.maxHp = maxHp;
         this.currentHp = this.maxHp;
         this.damageAnimationHp = this.currentHp;
