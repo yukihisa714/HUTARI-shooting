@@ -3,6 +3,7 @@ import { Point, Vector, Square, } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { player } from "./player.js";
 import { enemies } from "./enemy.js";
+import { damageEffect } from "./effect.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -65,6 +66,7 @@ export function updateBullets() {
         if (bullet.targetType === ENTITY_TYPES.player) {
             if (bullet.checkHit(player)) {
                 player.hp -= 10;
+                damageEffect.takeDamage();
                 bullet.isAlive = false;
                 continue;
             }

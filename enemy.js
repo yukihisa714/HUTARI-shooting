@@ -4,6 +4,7 @@ import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { MachineGun } from "./machineGun.js";
 import { player } from "./player.js";
+import { damageEffect } from "./effect.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -218,6 +219,7 @@ export class StandardEnemy extends Entity {
         if (this.canAttack) {
             if (this.rigidBody.collision(player.rigidBody)) {
                 player.hp -= this.dpa;
+                damageEffect.takeDamage();
                 this.canAttack = false;
             }
         }

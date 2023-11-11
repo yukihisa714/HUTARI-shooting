@@ -3,6 +3,7 @@ import { updateBullets } from "./bullet.js";
 import { player } from "./player.js";
 import { operateEnemies } from "./enemy.js";
 import { stage } from "./stage.js";
+import { damageEffect } from "./effect.js";
 
 
 
@@ -15,6 +16,8 @@ function mainLoop() {
     updateBullets();
     player.updata();
     operateEnemies();
+
+    damageEffect.update();
 }
 
 setInterval(mainLoop, 1000 / FPS);
