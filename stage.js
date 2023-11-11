@@ -13,8 +13,10 @@ class Stage {
         this.frame++;
         this.second = this.frame / FPS;
 
-        if (this.frame % (FPS * 5) === 1) {
-            enemies.push(ENEMIES_DATA[0].getClass(new Point(getRandom(0, CAN_W), -50)));
+        if (this.second > 0 && this.second < 75) {
+            if (this.frame % (FPS * 5) === 1) {
+                enemies.push(ENEMIES_DATA[0].getClass(new Point(getRandom(0, CAN_W), -50)));
+            }
         }
 
         if (this.second > 25) {
