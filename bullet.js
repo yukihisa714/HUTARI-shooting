@@ -4,6 +4,7 @@ import { Entity, ENTITY_TYPES } from "./entity.js";
 import { player } from "./player.js";
 import { enemies } from "./enemy.js";
 import { damageEffect } from "./effect.js";
+import { newDamageNumber } from "./UI.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -75,6 +76,7 @@ export function updateBullets() {
             for (const enemy of enemies) {
                 if (bullet.checkHit(enemy)) {
                     enemy.takeDamage(10);
+                    newDamageNumber(new Point(enemy.pos.x, enemy.pos.y), 10);
                     bullet.isAlive = false;
                     continue bulletLoop;
                 }
@@ -93,5 +95,6 @@ export function updateBullets() {
         }
     }
 
+    con.fillStyle = "#fff";
     con.fillText(FIRED_BULLETS.length, 10, 10);
 }

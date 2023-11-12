@@ -4,6 +4,7 @@ import { player } from "./player.js";
 import { operateEnemies } from "./enemy.js";
 import { stage } from "./stage.js";
 import { damageEffect } from "./effect.js";
+import { updateDamageNumbers } from "./UI.js";
 
 
 
@@ -18,6 +19,8 @@ function mainLoop() {
     operateEnemies();
 
     damageEffect.update();
+
+    updateDamageNumbers();
 }
 
 setInterval(mainLoop, 1000 / FPS);
