@@ -6,7 +6,7 @@ export const CAN_H = 500;
 const can = document.getElementById("canvas");
 can.width = CAN_W;
 can.height = CAN_H;
-can.style.background = "#000";
+can.style.background = "#002";
 
 export const con = can.getContext("2d");
 
