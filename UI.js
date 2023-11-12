@@ -1,6 +1,6 @@
 import { Point } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
-import { drawParallelogram, getZeroVector } from "./function.js";
+import { drawParallelogram, drawText, getZeroVector } from "./function.js";
 import { FPS, con } from "./option.js";
 
 export class HealthGauge extends Entity {
@@ -40,10 +40,8 @@ export class HealthGauge extends Entity {
         drawParallelogram(con, this.pos, this.w * this.hpPercentage, this.h, "#0f0");
         drawParallelogram(con, this.pos, this.w, this.h, undefined, "#000", 1);
 
-        con.fillStyle = "#fff";
-        con.font = "15px Fantasy";
-        con.textAlign = "right";
-        con.fillText(`${this.currentHp} / ${this.maxHp}`, this.pos.x + this.w, this.pos.y - 5);
+        const text = `${this.currentHp} / ${this.maxHp}`;
+        drawText(con, text, new Point(this.pos.x + this.w, this.pos.y - 5), "right", 15, "Fantasy", "#fff");
     }
 
     update() {
@@ -67,9 +65,7 @@ class DamageNumber extends Entity {
     }
 
     draw() {
-        con.fillStyle = `rgba(255,255,0,${this.a})`;
-        con.font = "15px Fantasy";
-        con.fillText(this.damage, this.pos.x, this.pos.y);
+        drawText(con, this.damage, this.pos, "left", 15, "Fantasy", `rgba(255,255,0,${this.a})`);
     }
 
     update() {

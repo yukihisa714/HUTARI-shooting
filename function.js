@@ -91,13 +91,13 @@ export function getZeroVector() {
 ///////////////////////////////////////////////////////////////
 
 /**
- * 
- * @param {} ctx 
- * @param {Point} pos 
- * @param {number} w 
- * @param {number} h 
- * @param {string} fillColor 
- * @param {string} strokeColor 
+ * 平行四辺形を描画する関数
+ * @param {any} ctx context
+ * @param {Point} pos 位置(左上)
+ * @param {number} w 横幅
+ * @param {number} h 縦幅
+ * @param {string} fillColor 塗りつぶす色
+ * @param {string} strokeColor 縁取る色
  */
 export function drawParallelogram(ctx, pos, width, height, fillColor, strokeColor, lineWidth) {
     ctx.beginPath();
@@ -116,4 +116,33 @@ export function drawParallelogram(ctx, pos, width, height, fillColor, strokeColo
         ctx.lineWidth = lineWidth;
         ctx.stroke();
     }
+}
+
+
+/**
+ * テキストを描画する関数
+ * @param {any} ctx context
+ * @param {string} text テキスト
+ * @param {Point} pos 位置
+ * @param {string} align 揃える位置
+ * @param {number} size フォントサイズ
+ * @param {string} font フォント
+ * @param {string} fillColor 塗りつぶす色
+ * @param {string} strokeColor 縁取る色
+ */
+export function drawText(ctx, text, pos, align, size, font, fillColor, strokeColor) {
+    if (align) ctx.textAlign = align;
+    else ctx.textAlign = "left";
+
+    ctx.font = `${size}px ${font}`;
+
+    if (fillColor) {
+        ctx.fillStyle = fillColor;
+        ctx.fillText(text, pos.x, pos.y);
+    }
+    if (strokeColor) {
+        ctx.strokeStyle = strokeColor;
+        ctx.strokeText(text, pos.x, pos.y);
+    }
+
 }
