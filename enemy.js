@@ -4,7 +4,7 @@ import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { MachineGun } from "./machineGun.js";
 import { player } from "./player.js";
-import { damageEffect } from "./effect.js";
+import { damageEffect, newDeathEffect } from "./effect.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -393,6 +393,7 @@ export function operateEnemies() {
             else {
                 player.enemyKills[name] = 1;
             }
+            newDeathEffect(new Point(enemies[i].pos.x, enemies[i].pos.y));
             enemies.splice(i, 1);
         }
         else i++;

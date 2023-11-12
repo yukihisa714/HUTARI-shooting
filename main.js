@@ -3,7 +3,7 @@ import { updateBullets } from "./bullet.js";
 import { player } from "./player.js";
 import { operateEnemies } from "./enemy.js";
 import { stage } from "./stage.js";
-import { damageEffect } from "./effect.js";
+import { damageEffect, updateDeathEffects } from "./effect.js";
 import { updateDamageNumbers } from "./UI.js";
 
 
@@ -20,6 +20,7 @@ function mainLoop() {
 
     damageEffect.update();
 
+    updateDeathEffects();
     updateDamageNumbers();
 }
 

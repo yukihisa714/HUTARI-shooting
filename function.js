@@ -1,4 +1,5 @@
 import { Point, Vector } from "./class.js";
+import { con } from "./option.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -91,6 +92,18 @@ export function getZeroVector() {
 ///////////////////////////////////////////////////////////////
 
 /**
+ * 角度からベクトルを取得する関数
+ * @param {number} theta 度数法
+ * @param {number} length 長さ
+ * @returns 
+ */
+export function getVectorFromAngle(theta, length) {
+    return new Vector(getZeroPoint(), new Point(cos(theta) * length, sin(theta) * length));
+}
+
+///////////////////////////////////////////////////////////////
+
+/**
  * 平行四辺形を描画する関数
  * @param {any} ctx context
  * @param {Point} pos 位置(左上)
@@ -145,4 +158,25 @@ export function drawText(ctx, text, pos, align, size, font, fillColor, strokeCol
         ctx.strokeText(text, pos.x, pos.y);
     }
 
+}
+
+
+export function drawStraightLine1(pos1, pos2, color, lineWidth) {
+    con.strokeStyle = color;
+    con.lineWidth = lineWidth;
+    con.beginPath();
+    con.lineTo(pos1.x, pos1.y);
+    con.lineTo(pos2.x, pos2.y);
+    con.closePath();
+    con.stroke();
+}
+
+export function drawStraightLine2(pos, vector, color, lineWidth) {
+    con.strokeStyle = color;
+    con.lineWidth = lineWidth;
+    con.beginPath();
+    con.lineTo(pos.x, pos.y);
+    con.lineTo(pos.x + vector.x, pos.y + vector.y);
+    con.closePath();
+    con.stroke();
 }
