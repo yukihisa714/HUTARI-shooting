@@ -108,9 +108,6 @@ export class Player extends Entity {
         con.closePath();
         con.fill();
 
-        con.fillStyle = "#fff";
-        con.fillText(this.hp, this.pos.x, this.pos.y + 20);
-
         this.drawRigidBody();
     }
 

@@ -122,7 +122,7 @@ export function drawParallelogram(ctx, pos, width, height, fillColor, strokeColo
 /**
  * テキストを描画する関数
  * @param {any} ctx context
- * @param {string} text テキスト
+ * @param {any} text テキスト
  * @param {Point} pos 位置
  * @param {string} align 揃える位置
  * @param {number} size フォントサイズ
@@ -132,7 +132,7 @@ export function drawParallelogram(ctx, pos, width, height, fillColor, strokeColo
  */
 export function drawText(ctx, text, pos, align, size, font, fillColor, strokeColor) {
     if (align) ctx.textAlign = align;
-    else ctx.textAlign = "left";
+    // else ctx.textAlign = "left";
 
     ctx.font = `${size}px ${font}`;
 

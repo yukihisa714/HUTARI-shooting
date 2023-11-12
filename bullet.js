@@ -5,6 +5,7 @@ import { player } from "./player.js";
 import { enemies } from "./enemy.js";
 import { damageEffect } from "./effect.js";
 import { newDamageNumber } from "./UI.js";
+import { drawText } from "./function.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -95,6 +96,5 @@ export function updateBullets() {
         }
     }
 
-    con.fillStyle = "#fff";
-    con.fillText(FIRED_BULLETS.length, 10, 10);
+    drawText(con, FIRED_BULLETS.length, new Point(10, 15), "left", 15, "Fantasy", "#fff");
 }

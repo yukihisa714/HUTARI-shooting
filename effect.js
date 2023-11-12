@@ -1,3 +1,4 @@
+import { Entity } from "./entity.js";
 import { CAN_H, CAN_W, con, FPS } from "./option.js";
 
 class DamageEffect {
@@ -28,3 +29,10 @@ class DamageEffect {
 }
 
 export const damageEffect = new DamageEffect();
+
+
+export class DeathEffect extends Entity {
+    constructor() {
+
+    }
+}

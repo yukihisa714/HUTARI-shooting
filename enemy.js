@@ -1,5 +1,5 @@
 import { FPS, con } from "./option.js";
-import { getZeroVector } from "./function.js";
+import { drawText, getZeroVector } from "./function.js";
 import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { MachineGun } from "./machineGun.js";
@@ -240,8 +240,7 @@ export class StandardEnemy extends Entity {
         con.fillStyle = this.color;
         con.fillRect(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.w, this.h);
 
-        con.fillStyle = "#fff";
-        con.fillText(this.hp, this.pos.x, this.pos.y);
+        drawText(con, this.hp, this.pos, "right", 15, "Fantasy", "#fff");
 
         this.drawRigidBody();
     }
