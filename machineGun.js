@@ -18,6 +18,8 @@ import { Bullet, FIRED_BULLETS } from "./bullet.js";
  * @param {number} MOA 命中精度 minutes of arc
  * @param {number} bulletSpeed 弾の速度
  * @param {number} capacity 装填数
+ * @param {number} aimDirection 撃つ角度(度数法)
+ * @param {number} targetType 攻撃を与える対象
  * @param {Entity} parent 親のエンティティ
  */
 export class MachineGun extends Entity {

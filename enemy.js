@@ -267,7 +267,7 @@ export class StandardEnemy extends Entity {
     draw() {
 
         if (this.tw) {
-            drawTexture(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.tx, this.ty, this.tw, this.th);
+            drawTexture((this.pos.x - this.w / 2) | 0, (this.pos.y - this.h / 2) | 0, this.tx, this.ty, this.tw, this.th);
         }
         else {
             con.fillStyle = this.color;
@@ -275,7 +275,7 @@ export class StandardEnemy extends Entity {
 
         }
 
-        // drawText(con, this.hp, this.pos, "right", 15, "Fantasy", "#fff");
+        // drawText(con, this.hp, this.pos, "right", 15, "Impact", "#fff");
 
         // this.drawRigidBody();
     }

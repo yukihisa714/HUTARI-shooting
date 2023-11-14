@@ -1,4 +1,4 @@
-export const FPS = 30;
+export const FPS = 60;
 
 export const CAN_W = 300;
 export const CAN_H = 500;
@@ -33,5 +33,5 @@ const tcon = tcan.getContext("2d");
 tcon.imageSmoothingEnabled = false;
 
 IMAGE.onload = () => {
-    tcon.drawImage(IMAGE, 0, 24, 8, 8, 0, 0, 32, 32);
+    tcon.drawImage(IMAGE, 0, 8, 16, 16, 0, 0, 64, 64);
 };

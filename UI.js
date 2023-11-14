@@ -41,7 +41,7 @@ export class HealthGauge extends Entity {
         drawParallelogram(con, this.pos, this.w, this.h, undefined, "#000", 1);
 
         const text = `${this.currentHp} / ${this.maxHp}`;
-        drawText(con, text, new Point(this.pos.x + this.w, this.pos.y - 5), "right", 15, "Fantasy", "#fff");
+        drawText(con, text, new Point(this.pos.x + this.w, this.pos.y - 5), "right", 15, "Impact", "#fff");
     }
 
     update() {
@@ -65,7 +65,7 @@ class DamageNumber extends Entity {
     }
 
     draw() {
-        drawText(con, this.damage, this.pos, "left", 15, "Fantasy", `rgba(255,255,0,${this.a})`, `rgba(0,0,0,${this.a})`);
+        drawText(con, this.damage, this.pos, "left", 15, "Impact", `rgba(255,255,0,${this.a})`, `rgba(0,0,0,${this.a})`);
     }
 
     update() {

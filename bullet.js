@@ -1,11 +1,11 @@
-import { con } from "./option.js";
+import { con, P } from "./option.js";
 import { Point, Vector, Square, } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { player } from "./player.js";
 import { enemies } from "./enemy.js";
 import { damageEffect } from "./effect.js";
 import { newDamageNumber } from "./UI.js";
-import { drawText } from "./function.js";
+import { drawText, drawTexture } from "./function.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -19,6 +19,7 @@ import { drawText } from "./function.js";
  * @param {Vector} vector 速度と向き(一秒あたりのpx)(残像の向きにも使用)
  * @param {Square} rigidBody 剛体の四角形
  * @param {number} length 弾の残像の長さ
+ * @param {number} targetType 攻撃を与える対象
  */
 export class Bullet extends Entity {
     constructor(type, name, position, width, height, vector, rigidBody, length, targetType) {
@@ -46,6 +47,10 @@ export class Bullet extends Entity {
         con.lineTo(this.pos.x + this.vector.x * p, this.pos.y + this.vector.y * p);
         con.closePath();
         con.stroke();
+
+        if (this.targetType === ENTITY_TYPES.enemy) {
+            drawTexture(this.pos.x - P / 2, this.pos.y - this.length, 0, 24, 1, 4);
+        }
     }
 }
 
@@ -96,5 +101,5 @@ export function updateBullets() {
         }
     }
 
-    drawText(con, FIRED_BULLETS.length, new Point(10, 15), "left", 15, "Fantasy", "#fff");
+    drawText(con, FIRED_BULLETS.length, new Point(10, 15), "left", 15, "Impact", "#fff");
 }

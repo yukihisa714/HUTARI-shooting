@@ -6,7 +6,7 @@ import { enemies, ENEMIES_DATA } from "./enemy.js";
 class Stage {
     constructor() {
         this.frame = 0;
-        this.spawnSeconds = [5, 4, 12, 10];
+        this.spawnSeconds = [5, 4, 12, 10, 10];
     }
 
     update() {
@@ -37,6 +37,13 @@ class Stage {
             if (this.frame % (FPS * this.spawnSeconds[3]) === 1) {
                 enemies.push(ENEMIES_DATA[3].getClass(new Point(getRandom(0, CAN_W), -50)));
                 this.spawnSeconds[3] = getRandom(8, 12);
+            }
+        }
+
+        if (this.second > 0) {
+            if (this.frame % (FPS * this.spawnSeconds[4]) === 1) {
+                enemies.push(ENEMIES_DATA[4].getClass(new Point(getRandom(0, CAN_W), -50)));
+                this.spawnSeconds[4] = getRandom(8, 12);
             }
         }
     }

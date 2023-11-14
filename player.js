@@ -110,9 +110,9 @@ export class Player extends Entity {
         // con.closePath();
         // con.fill();
 
-        drawTexture(this.pos.x - this.w / 2, this.pos.y, 0, 0, 8, 8);
+        drawTexture((this.pos.x - this.w / 2) | 2, (this.pos.y) | 0, 0, 0, 8, 8);
 
-        this.drawRigidBody();
+        // this.drawRigidBody();
     }
 
     updata() {
