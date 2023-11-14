@@ -1,5 +1,5 @@
 import { FPS, con } from "./option.js";
-import { drawText, getZeroVector } from "./function.js";
+import { drawText, drawTexture, getZeroVector } from "./function.js";
 import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { MachineGun } from "./machineGun.js";
@@ -12,14 +12,18 @@ export const ENEMIES_DATA = [
     {
         name: "Trooper",
         type: "Standard",
-        w: 20,
-        h: 20,
+        w: 32,
+        h: 32,
         color: "#f00",
         speed: 50,
         hp: 25,
         dpa: 10,
         spa: 1,
         dps: 10,
+        tx: 8,
+        ty: 0,
+        tw: 8,
+        th: 8,
 
         getClass: function (position) {
             return new StandardEnemy(
@@ -35,21 +39,29 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-            )
+                this.tx,
+                this.ty,
+                this.tw,
+                this.th,
+            );
         }
     },
 
     {
         name: "Speedster",
         type: "Small and Agile",
-        w: 10,
-        h: 10,
+        w: 16,
+        h: 16,
         color: "#ff0",
         speed: 150,
         hp: 5,
         dpa: 5,
         spa: 0.5,
         dps: 10,
+        tx: 2,
+        ty: 24,
+        tw: 4,
+        th: 4,
 
         getClass: function (position) {
             return new StandardEnemy(
@@ -65,7 +77,11 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-            )
+                this.tx,
+                this.ty,
+                this.tw,
+                this.th,
+            );
         }
     },
 
@@ -80,6 +96,10 @@ export const ENEMIES_DATA = [
         dpa: 25,
         spa: 2,
         dps: 12.5,
+        tx: 0,
+        ty: 8,
+        tw: 16,
+        th: 16,
 
         getClass: function (position) {
             return new StandardEnemy(
@@ -95,7 +115,11 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-            )
+                this.tx,
+                this.ty,
+                this.tw,
+                this.th,
+            );
         }
     },
 
@@ -127,7 +151,7 @@ export const ENEMIES_DATA = [
                 this.dpa,
                 this.spa,
                 this.shield,
-            )
+            );
         }
     },
 
@@ -172,7 +196,7 @@ export const ENEMIES_DATA = [
                     0,
                     ENTITY_TYPES.player,
                 ),
-            )
+            );
         }
     },
 ];
@@ -194,7 +218,7 @@ export const ENEMIES_DATA = [
  * @param {number} SPA second/attack
  */
 export class StandardEnemy extends Entity {
-    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA) {
+    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, tx, ty, tw, th) {
         super(type, name, position, width, height, vector, rigidBody);
         this.color = color;
         this.speed = speed;
@@ -205,6 +229,10 @@ export class StandardEnemy extends Entity {
         this.dps = this.dpa * this.spa;
         this.attackCount = 0;
         this.canAttack = true;
+        this.tx = tx;
+        this.ty = ty;
+        this.tw = tw;
+        this.th = th;
     }
 
     getVectorToPlayer() {
@@ -237,12 +265,19 @@ export class StandardEnemy extends Entity {
     }
 
     draw() {
-        con.fillStyle = this.color;
-        con.fillRect(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.w, this.h);
 
-        drawText(con, this.hp, this.pos, "right", 15, "Fantasy", "#fff");
+        if (this.tw) {
+            drawTexture(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.tx, this.ty, this.tw, this.th);
+        }
+        else {
+            con.fillStyle = this.color;
+            con.fillRect(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.w, this.h);
 
-        this.drawRigidBody();
+        }
+
+        // drawText(con, this.hp, this.pos, "right", 15, "Fantasy", "#fff");
+
+        // this.drawRigidBody();
     }
 
     update() {

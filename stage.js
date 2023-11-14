@@ -19,14 +19,14 @@ class Stage {
             }
         }
 
-        if (this.second > 25) {
+        if (this.second > 0) {
             if (this.frame % (FPS * this.spawnSeconds[1]) === 1) {
                 enemies.push(ENEMIES_DATA[1].getClass(new Point(getRandom(-100, CAN_W + 100), -50)));
                 this.spawnSeconds[1] = getRandom(5, 10);
             }
         }
 
-        if (this.second > 50) {
+        if (this.second > 0) {
             if (this.frame % (FPS * this.spawnSeconds[2]) === 1) {
                 enemies.push(ENEMIES_DATA[2].getClass(new Point(getRandom(0, CAN_W), -50)));
                 this.spawnSeconds[2] = getRandom(25, 30);
