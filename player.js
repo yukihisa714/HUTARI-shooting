@@ -1,5 +1,5 @@
 import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
-import { getZeroVector } from "./function.js";
+import { drawTexture, getZeroVector } from "./function.js";
 import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { HealthGauge } from "./UI.js";
@@ -10,6 +10,8 @@ import { MachineGun } from "./machineGun.js";
 export const DEFAULT_PLAYER = {
     posX: CAN_W / 2,
     posY: CAN_H * 0.8,
+    width: 32,
+    height: 32,
     maxSpeed: 120,
     accel: 480,
     RPM: 240,
@@ -100,13 +102,15 @@ export class Player extends Entity {
 
     draw() {
 
-        con.fillStyle = "#00f";
-        con.beginPath();
-        con.lineTo(this.pos.x, this.pos.y);
-        con.lineTo(this.pos.x + 10, this.pos.y + 30);
-        con.lineTo(this.pos.x - 10, this.pos.y + 30);
-        con.closePath();
-        con.fill();
+        // con.fillStyle = "#00f";
+        // con.beginPath();
+        // con.lineTo(this.pos.x, this.pos.y);
+        // con.lineTo(this.pos.x + this.w / 2, this.pos.y + this.h);
+        // con.lineTo(this.pos.x - this.w / 2, this.pos.y + this.h);
+        // con.closePath();
+        // con.fill();
+
+        drawTexture(this.pos.x - this.w / 2, this.pos.y, 0, 0, 8, 8);
 
         this.drawRigidBody();
     }
@@ -127,10 +131,13 @@ export const player = new Player(
     ENTITY_TYPES.player,
     "player",
     new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
-    20,
-    30,
+    DEFAULT_PLAYER.width,
+    DEFAULT_PLAYER.height,
     getZeroVector(),
-    new Square(new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY), 0, 30, 10, 10),
+    new Square(
+        new Point(DEFAULT_PLAYER.posX, DEFAULT_PLAYER.posY),
+        0, DEFAULT_PLAYER.height, DEFAULT_PLAYER.width / 2, DEFAULT_PLAYER.width / 2
+    ),
     DEFAULT_PLAYER.maxSpeed,
     DEFAULT_PLAYER.accel,
     100,
