@@ -42,13 +42,13 @@ export class Bullet extends Entity {
         const p = this.length / this.vector.getLength();
         const ex = this.pos.x + this.vector.x * p;
         const ey = this.pos.y + this.vector.y * p;
-        con.strokeStyle = "#fff";
-        con.lineWidth = 2;
-        con.beginPath();
-        con.lineTo(this.pos.x, this.pos.y);
-        con.lineTo(ex, ey);
-        con.closePath();
-        con.stroke();
+        // con.strokeStyle = "#fff";
+        // con.lineWidth = 2;
+        // con.beginPath();
+        // con.lineTo(this.pos.x, this.pos.y);
+        // con.lineTo(ex, ey);
+        // con.closePath();
+        // con.stroke();
 
         if (this.targetType === ENTITY_TYPES.enemy) {
             drawTexture(this.pos.x - P / 2, this.pos.y - this.length, 0, 24, 1, 4);

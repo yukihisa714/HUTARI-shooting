@@ -197,10 +197,10 @@ export function drawTexture(dx, dy, tx, ty, tW, tH, angle) {
         con.save();
         con.translate(dx, dy);
         con.rotate(degreesToRadians(angle));
-        con.drawImage(IMAGE, tx, ty, tW, tH, -tW * P / 2, tH * P / 2, tW * P, tH * P);
+        con.drawImage(IMAGE, tx, ty, tW, tH, 0, 0, tW * P, tH * P);
         con.restore();
     }
-    else{
+    else {
         con.drawImage(IMAGE, tx, ty, tW, tH, dx, dy, tW * P, tH * P);
     }
 }
