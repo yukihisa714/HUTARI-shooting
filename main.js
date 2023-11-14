@@ -1,12 +1,10 @@
 import { FPS, CAN_W, CAN_H, con } from "./option.js";
+import { updateDamageNumbers } from "./UI.js";
+import { damageEffect, updateDeathEffects } from "./effect.js";
 import { updateBullets } from "./bullet.js";
 import { player } from "./player.js";
 import { operateEnemies } from "./enemy.js";
 import { stage } from "./stage.js";
-import { damageEffect, updateDeathEffects } from "./effect.js";
-import { updateDamageNumbers } from "./UI.js";
-
-
 
 
 function mainLoop() {

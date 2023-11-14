@@ -1,12 +1,12 @@
 import { con, P } from "./option.js";
+import { drawText } from "./function.js";
 import { Point, Vector, Square, } from "./class.js";
+import { TEXTURE_MAPS } from "./texture.js";
+import { newDamageNumber } from "./UI.js";
+import { damageEffect } from "./effect.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { player } from "./player.js";
 import { enemies } from "./enemy.js";
-import { damageEffect } from "./effect.js";
-import { newDamageNumber } from "./UI.js";
-import { drawText, drawTexture } from "./function.js";
-import { TEXTURE_MAPS } from "./texture.js";
 
 ///////////////////////////////////////////////////////////////
 

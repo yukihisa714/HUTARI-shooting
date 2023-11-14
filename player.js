@@ -1,10 +1,10 @@
 import { FPS, CAN_W, CAN_H, con, key } from "./option.js";
-import { drawTexture, getZeroVector } from "./function.js";
+import { getZeroVector } from "./function.js";
 import { Point, Vector, Square } from "./class.js";
+import { TEXTURE_MAPS } from "./texture.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { HealthGauge } from "./UI.js";
 import { MachineGun } from "./machineGun.js";
-import { TEXTURE_MAPS } from "./texture.js";
 
 ///////////////////////////////////////////////////////////////
 

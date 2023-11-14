@@ -1,7 +1,7 @@
+import { CAN_H, CAN_W, con, FPS } from "./option.js";
+import { drawStraightLine2, getVectorFromAngle, getZeroVector } from "./function.js";
 import { Point } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
-import { drawStraightLine2, getVectorFromAngle, getZeroVector } from "./function.js";
-import { CAN_H, CAN_W, con, FPS } from "./option.js";
 
 class DamageEffect {
     constructor() {

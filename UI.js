@@ -1,7 +1,7 @@
+import { FPS, con } from "./option.js";
+import { drawParallelogram, drawText, getZeroVector } from "./function.js";
 import { Point } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
-import { drawParallelogram, drawText, getZeroVector } from "./function.js";
-import { FPS, con } from "./option.js";
 
 export class HealthGauge extends Entity {
     constructor(type, name, position, width, height, vector, rigidBody, maxHp) {

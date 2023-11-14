@@ -1,5 +1,5 @@
+import { con } from "./option.js";
 import { Point, Vector } from "./class.js";
-import { IMAGE, P, con } from "./option.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -179,28 +179,4 @@ export function drawStraightLine2(pos, vector, color, lineWidth) {
     con.lineTo(pos.x + vector.x, pos.y + vector.y);
     con.closePath();
     con.stroke();
-}
-
-
-/**
- * テクスチャを描画する関数
- * @param {number} dx 描画する場所
- * @param {number} dy 描画する場所
- * @param {number} tx 切り抜く場所
- * @param {number} ty 切り抜く場所
- * @param {number} tW 切り抜く横幅
- * @param {number} tH 切り抜く縦幅
- * @param {number} angle 描画する角度(度数法)
- */
-export function drawTexture(dx, dy, tx, ty, tW, tH, angle) {
-    if (angle) {
-        con.save();
-        con.translate(dx, dy);
-        con.rotate(degreesToRadians(angle));
-        con.drawImage(IMAGE, tx, ty, tW, tH, 0, 0, tW * P, tH * P);
-        con.restore();
-    }
-    else {
-        con.drawImage(IMAGE, tx, ty, tW, tH, dx, dy, tW * P, tH * P);
-    }
 }

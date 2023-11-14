@@ -1,5 +1,5 @@
-import { degreesToRadians, getZeroPoint, radiansToDegrees } from "./function.js";
 import { con, IMAGE } from "./option.js";
+import { degreesToRadians, getZeroPoint, radiansToDegrees } from "./function.js";
 
 ///////////////////////////////////////////////////////////////
 

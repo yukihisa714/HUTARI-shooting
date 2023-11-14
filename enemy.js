@@ -1,11 +1,11 @@
 import { FPS, con } from "./option.js";
-import { drawText, drawTexture, getZeroVector } from "./function.js";
+import { drawText, getZeroVector } from "./function.js";
 import { Point, Vector, Square } from "./class.js";
+import { TEXTURE_MAPS } from "./texture.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
+import { damageEffect, newDeathEffect } from "./effect.js";
 import { MachineGun } from "./machineGun.js";
 import { player } from "./player.js";
-import { damageEffect, newDeathEffect } from "./effect.js";
-import { TEXTURE_MAPS } from "./texture.js";
 
 ///////////////////////////////////////////////////////////////
 
