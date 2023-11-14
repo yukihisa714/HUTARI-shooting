@@ -65,7 +65,7 @@ class DamageNumber extends Entity {
     }
 
     draw() {
-        drawText(con, this.damage, this.pos, "left", 15, "Fantasy", `rgba(255,255,0,${this.a})`);
+        drawText(con, this.damage, this.pos, "left", 15, "Fantasy", `rgba(255,255,0,${this.a})`, `rgba(0,0,0,${this.a})`);
     }
 
     update() {

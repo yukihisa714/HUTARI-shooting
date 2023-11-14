@@ -33,7 +33,7 @@ class Stage {
             }
         }
 
-        if (this.second > 75) {
+        if (this.second > 0) {
             if (this.frame % (FPS * this.spawnSeconds[3]) === 1) {
                 enemies.push(ENEMIES_DATA[3].getClass(new Point(getRandom(0, CAN_W), -50)));
                 this.spawnSeconds[3] = getRandom(8, 12);

@@ -88,8 +88,8 @@ export const ENEMIES_DATA = [
     {
         name: "Behemoth",
         type: "Large and Strong",
-        w: 40,
-        h: 40,
+        w: 64,
+        h: 64,
         color: "#080",
         speed: 20,
         hp: 200,
@@ -126,8 +126,8 @@ export const ENEMIES_DATA = [
     {
         name: "Guardian",
         type: "Shielded",
-        w: 20,
-        h: 20,
+        w: 32,
+        h: 32,
         color: "#f00",
         speed: 50,
         hp: 25,
@@ -345,7 +345,7 @@ export class ShieldEnemy extends StandardEnemy {
             con.fillStyle = "rgba(255,255,255,0.2)";
             con.fill();
             con.lineWidth = 1;
-            con.storkeStyle = "#fff";
+            con.strokeStyle = "#fff";
             con.stroke();
         }
     }
