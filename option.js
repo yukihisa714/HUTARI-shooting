@@ -34,4 +34,13 @@ tcon.imageSmoothingEnabled = false;
 
 IMAGE.onload = () => {
     tcon.drawImage(IMAGE, 0, 8, 16, 16, 0, 0, 64, 64);
+
+    // tcon.imageSmoothingEnabled = true;
+    tcon.save();
+    tcon.translate(32, 64);
+    tcon.rotate(60 * Math.PI / 180);
+    tcon.drawImage(IMAGE, 0, 8, 16, 16, -32, -32, 64, 64);
+    tcon.restore();
+
+    tcon.drawImage(IMAGE, 0, 8, 16, 16, 0, 0, 64, 64);
 };

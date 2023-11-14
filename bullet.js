@@ -40,16 +40,21 @@ export class Bullet extends Entity {
 
     draw() {
         const p = this.length / this.vector.getLength();
+        const ex = this.pos.x + this.vector.x * p;
+        const ey = this.pos.y + this.vector.y * p;
         con.strokeStyle = "#fff";
         con.lineWidth = 2;
         con.beginPath();
         con.lineTo(this.pos.x, this.pos.y);
-        con.lineTo(this.pos.x + this.vector.x * p, this.pos.y + this.vector.y * p);
+        con.lineTo(ex, ey);
         con.closePath();
         con.stroke();
 
         if (this.targetType === ENTITY_TYPES.enemy) {
             drawTexture(this.pos.x - P / 2, this.pos.y - this.length, 0, 24, 1, 4);
+        }
+        else if (this.targetType === ENTITY_TYPES.player) {
+            drawTexture(ex, ey, 1, 24, 1, 4, this.vector.getTheta() + 90);
         }
     }
 }

@@ -190,7 +190,17 @@ export function drawStraightLine2(pos, vector, color, lineWidth) {
  * @param {number} ty 切り抜く場所
  * @param {number} tW 切り抜く横幅
  * @param {number} tH 切り抜く縦幅
+ * @param {number} angle 描画する角度(度数法)
  */
-export function drawTexture(dx, dy, tx, ty, tW, tH) {
-    con.drawImage(IMAGE, tx, ty, tW, tH, dx, dy, tW * P, tH * P);
+export function drawTexture(dx, dy, tx, ty, tW, tH, angle) {
+    if (angle) {
+        con.save();
+        con.translate(dx, dy);
+        con.rotate(degreesToRadians(angle));
+        con.drawImage(IMAGE, tx, ty, tW, tH, -tW * P / 2, tH * P / 2, tW * P, tH * P);
+        con.restore();
+    }
+    else{
+        con.drawImage(IMAGE, tx, ty, tW, tH, dx, dy, tW * P, tH * P);
+    }
 }
