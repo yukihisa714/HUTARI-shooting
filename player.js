@@ -4,6 +4,7 @@ import { Point, Vector, Square } from "./class.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { HealthGauge } from "./UI.js";
 import { MachineGun } from "./machineGun.js";
+import { TEXTURE_MAPS } from "./texture.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -110,8 +111,7 @@ export class Player extends Entity {
         // con.closePath();
         // con.fill();
 
-        drawTexture(this.pos.x - this.w / 2, this.pos.y, 0, 0, 8, 8);
-
+        TEXTURE_MAPS.player.drawTexture(this.pos.x - this.w / 2, this.pos.y);
         // this.drawRigidBody();
     }
 

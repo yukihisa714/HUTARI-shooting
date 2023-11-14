@@ -6,6 +6,7 @@ import { enemies } from "./enemy.js";
 import { damageEffect } from "./effect.js";
 import { newDamageNumber } from "./UI.js";
 import { drawText, drawTexture } from "./function.js";
+import { TEXTURE_MAPS } from "./texture.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -51,10 +52,10 @@ export class Bullet extends Entity {
         // con.stroke();
 
         if (this.targetType === ENTITY_TYPES.enemy) {
-            drawTexture(this.pos.x - P / 2, this.pos.y - this.length, 0, 24, 1, 4);
+            TEXTURE_MAPS.playerBullet.drawTexture(this.pos.x - P / 2, this.pos.y - this.length);
         }
         else if (this.targetType === ENTITY_TYPES.player) {
-            drawTexture(ex, ey, 1, 24, 1, 4, this.vector.getTheta() + 90);
+            TEXTURE_MAPS.enemyBullet.drawTexture(ex, ey, this.vector.getTheta() + 90);
         }
     }
 }

@@ -1,4 +1,5 @@
-import { getZeroPoint, radiansToDegrees } from "./function.js";
+import { degreesToRadians, getZeroPoint, radiansToDegrees } from "./function.js";
+import { con, IMAGE } from "./option.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -110,5 +111,48 @@ export class Square {
         if (square2.bottom < this.top || this.bottom < square2.top) return false;
         if (square2.right < this.left || this.right < square2.left) return false;
         return true;
+    }
+}
+
+///////////////////////////////////////////////////////////////
+
+/**
+ * テクスチャクラス
+ * @param {number} tx テクスチャx座標
+ * @param {number} ty テクスチャy座標
+ * @param {number} tw テクスチャ縦幅
+ * @param {number} th テクスチャ横幅
+ * @param {number} P テクスチャ拡大率
+ */
+export class Texture {
+    constructor(tx, ty, tw, th, P) {
+        this.tx = tx;
+        this.ty = ty;
+        this.tw = tw;
+        this.th = th;
+        this.P = P;
+    }
+
+    /**
+     * テクスチャを描画するメソッド
+     * @param {number} dx 描画する場所
+     * @param {number} dy 描画する場所
+     * @param {number} tx 切り抜く場所
+     * @param {number} ty 切り抜く場所
+     * @param {number} tW 切り抜く横幅
+     * @param {number} tH 切り抜く縦幅
+     * @param {number} angle 描画する角度(度数法)
+     */
+    drawTexture(dx, dy, angle) {
+        if (angle) {
+            con.save();
+            con.translate(dx, dy);
+            con.rotate(degreesToRadians(angle));
+            con.drawImage(IMAGE, this.tx, this.ty, this.tw, this.th, 0, 0, this.tw * this.P, this.th * this.P);
+            con.restore();
+        }
+        else {
+            con.drawImage(IMAGE, this.tx, this.ty, this.tw, this.th, dx, dy, this.tw * this.P, this.th * this.P);
+        }
     }
 }

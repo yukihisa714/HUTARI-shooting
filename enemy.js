@@ -5,6 +5,7 @@ import { Entity, ENTITY_TYPES } from "./entity.js";
 import { MachineGun } from "./machineGun.js";
 import { player } from "./player.js";
 import { damageEffect, newDeathEffect } from "./effect.js";
+import { TEXTURE_MAPS } from "./texture.js";
 
 ///////////////////////////////////////////////////////////////
 
@@ -20,10 +21,7 @@ export const ENEMIES_DATA = [
         dpa: 10,
         spa: 1,
         dps: 10,
-        tx: 8,
-        ty: 0,
-        tw: 8,
-        th: 8,
+        texture: TEXTURE_MAPS.standardEnemy,
 
         getClass: function (position) {
             return new StandardEnemy(
@@ -39,10 +37,7 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-                this.tx,
-                this.ty,
-                this.tw,
-                this.th,
+                this.texture,
             );
         }
     },
@@ -58,10 +53,7 @@ export const ENEMIES_DATA = [
         dpa: 5,
         spa: 0.5,
         dps: 10,
-        tx: 2,
-        ty: 24,
-        tw: 4,
-        th: 4,
+        texture: TEXTURE_MAPS.smallEnemy,
 
         getClass: function (position) {
             return new StandardEnemy(
@@ -77,10 +69,7 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-                this.tx,
-                this.ty,
-                this.tw,
-                this.th,
+                this.texture,
             );
         }
     },
@@ -96,10 +85,7 @@ export const ENEMIES_DATA = [
         dpa: 25,
         spa: 2,
         dps: 12.5,
-        tx: 0,
-        ty: 8,
-        tw: 16,
-        th: 16,
+        texture: TEXTURE_MAPS.largeEnemy,
 
         getClass: function (position) {
             return new StandardEnemy(
@@ -115,10 +101,7 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
-                this.tx,
-                this.ty,
-                this.tw,
-                this.th,
+                this.texture,
             );
         }
     },
@@ -218,7 +201,7 @@ export const ENEMIES_DATA = [
  * @param {number} SPA second/attack
  */
 export class StandardEnemy extends Entity {
-    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, tx, ty, tw, th) {
+    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, texture) {
         super(type, name, position, width, height, vector, rigidBody);
         this.color = color;
         this.speed = speed;
@@ -229,10 +212,7 @@ export class StandardEnemy extends Entity {
         this.dps = this.dpa * this.spa;
         this.attackCount = 0;
         this.canAttack = true;
-        this.tx = tx;
-        this.ty = ty;
-        this.tw = tw;
-        this.th = th;
+        this.texture = texture;
     }
 
     getVectorToPlayer() {
@@ -266,8 +246,8 @@ export class StandardEnemy extends Entity {
 
     draw() {
 
-        if (this.tw) {
-            drawTexture(this.pos.x - this.w / 2, this.pos.y - this.h / 2, this.tx, this.ty, this.tw, this.th);
+        if (this.texture) {
+            this.texture.drawTexture(this.pos.x - this.w / 2, this.pos.y - this.h / 2);
         }
         else {
             con.fillStyle = this.color;
