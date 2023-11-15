@@ -1,4 +1,4 @@
-export const FPS = 60;
+export const FPS = 30;
 
 export const CAN_W = 256;
 export const CAN_H = 512;
