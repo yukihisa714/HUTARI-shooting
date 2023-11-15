@@ -14,6 +14,12 @@ export const TEXTURE_MAPS = {
     largeEnemy:
         new Texture(0, 9, 16, 16, 4),
 
+    shieldEnemy:
+        new Texture(18, 0, 16, 16, 4),
+
+    rangeAttackEnemy:
+        new Texture(0, 31, 8, 8, 4),
+
     playerBullet:
         new Texture(0, 26, 1, 4, 4),
 

@@ -1,7 +1,7 @@
 export const FPS = 60;
 
-export const CAN_W = 300;
-export const CAN_H = 500;
+export const CAN_W = 256;
+export const CAN_H = 512;
 
 const can = document.getElementById("canvas");
 can.width = CAN_W;

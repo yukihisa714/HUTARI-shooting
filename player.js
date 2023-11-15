@@ -14,7 +14,7 @@ export const DEFAULT_PLAYER = {
     width: 32,
     height: 32,
     maxSpeed: 120,
-    accel: 480,
+    accel: 360,
     RPM: 240,
     MOA: 5,
     bulletSpeed: 300,
@@ -45,7 +45,7 @@ export class Player extends Entity {
         this.machineGun.parent = this;
         this.enemyKills = {};
 
-        this.healthGauge = new HealthGauge(ENTITY_TYPES.empty, "HpGauge", new Point(25, 480), 260, 8, getZeroVector, undefined, this.hp);
+        this.healthGauge = new HealthGauge(ENTITY_TYPES.empty, "HpGauge", new Point(25, 492), 216, 8, getZeroVector, undefined, this.hp);
     }
 
     control() {

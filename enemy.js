@@ -1,6 +1,6 @@
 import { FPS, con } from "./option.js";
 import { drawText, getZeroVector } from "./function.js";
-import { Point, Vector, Square } from "./class.js";
+import { Point, Vector, Square, Texture } from "./class.js";
 import { TEXTURE_MAPS } from "./texture.js";
 import { Entity, ENTITY_TYPES } from "./entity.js";
 import { damageEffect, newDeathEffect } from "./effect.js";
@@ -117,6 +117,7 @@ export const ENEMIES_DATA = [
         dpa: 10,
         spa: 1,
         dps: 10,
+        texture: TEXTURE_MAPS.shieldEnemy,
         shield: 50,
 
         getClass: function (position) {
@@ -133,6 +134,7 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
+                this.texture,
                 this.shield,
             );
         }
@@ -145,10 +147,11 @@ export const ENEMIES_DATA = [
         h: 20,
         color: "#f00",
         speed: 50,
-        hp: 25,
+        hp: 15,
         dpa: 2,
         spa: 1,
         dps: 2,
+        texture: TEXTURE_MAPS.rangeAttackEnemy,
 
         getClass: function (position) {
             return new RangeAttackEnemy(
@@ -164,6 +167,7 @@ export const ENEMIES_DATA = [
                 this.hp,
                 this.dpa,
                 this.spa,
+                this.texture,
                 new MachineGun(
                     ENTITY_TYPES.empty,
                     "machineGun",
@@ -199,6 +203,7 @@ export const ENEMIES_DATA = [
  * @param {number} HP 体力
  * @param {number} DPA damage/attack
  * @param {number} SPA second/attack
+ * @param {Texture} texture テクスチャマップ
  */
 export class StandardEnemy extends Entity {
     constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, texture) {
@@ -283,11 +288,12 @@ export class StandardEnemy extends Entity {
  * @param {number} HP 体力
  * @param {number} DPA damage/attack
  * @param {number} SPA second/attack
+ * @param {Texture} texture テクスチャマップ
  * @param {number} shieldHP シールドの体力
  */
 export class ShieldEnemy extends StandardEnemy {
-    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, shieldHp) {
-        super(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
+    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, texture, shieldHp) {
+        super(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, texture);
         this.shieldHp = shieldHp;
         this.shieldHpMax = this.shieldHp;
         this.shieldRadiusMax = Math.max(this.w, this.h) * Math.sqrt(2) * 0.75;
@@ -357,11 +363,12 @@ export class ShieldEnemy extends StandardEnemy {
  * @param {number} HP 体力
  * @param {number} DPA damage/attack
  * @param {number} SPA second/attack
+ * @param {Texture} texture テクスチャマップ
  * @param {MachineGun} machineGun 機銃
  */
 class RangeAttackEnemy extends StandardEnemy {
-    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, machineGun) {
-        super(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA);
+    constructor(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, texture, machineGun) {
+        super(type, name, position, width, height, vector, rigidBody, color, speed, HP, DPA, SPA, texture);
         this.machineGun = machineGun;
         this.machineGun.parent = this;
     }
